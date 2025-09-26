@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>AIMERS - Always Ahead! 🎯</title>
+  <meta name="description" content="AIMERS — Chill + Study + Win. CBSE coaching with attendance, assignments & student portal." />
+  <link rel="icon" href="https://example.com/favicon.ico" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            maroon: '#800020',
+            'maroon-light': '#a0002a',
+            'maroon-dark': '#600018'
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
+    body{font-family:'Poppins',sans-serif;box-sizing:border-box}
+    .hero-gradient{background:linear-gradient(135deg,#800020 0%,#a0002a 100%)}
+    .card-hover{transition:transform .25s,box-shadow .25s}
+    .card-hover:hover{transform:translateY(-6px);box-shadow:0 18px 36px rgba(128,0,32,.14)}
+    :focus{outline:3px solid rgba(128,0,32,.12);outline-offset:2px}
+    .small-txt{font-size:.95rem}
+  </style>
+</head>
+<body class="bg-white">
+
+  <!-- NAV -->
+  <nav class="fixed top-0 w-full bg-white shadow z-50">
+    <div class="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between">
+      <div class="flex items-center gap-3">
+        <span class="text-2xl font-extrabold text-maroon">🎯 AIMERS</span>
+        <span class="text-xs text-gray-500 hidden sm:inline">Chill • Study • Win</span>
+      </div>
+      <div class="hidden md:flex items-center gap-4">
+        <a href="#home" class="text-maroon font-semibold">Home</a>
+        <a href="#courses" class="text-gray-700 hover:text-maroon">Courses</a>
+        <a href="#why" class="text-gray-700 hover:text-maroon">Why AIMERS?</a>
+        <a href="#contact" class="text-gray-700 hover:text-maroon">Contact</a>
+        <a href="/dashboard" target="_blank" class="bg-maroon text-white px-3 py-2 rounded-full font-semibold ml-2">Open Portal 👩‍💻🔥</a>
+      </div>
+      <button id="mBtn" class="md:hidden px-3 py-2 border rounded">☰</button>
+    </div>
+    <div id="mNav" class="md:hidden hidden px-4 pb-3">
+      <a class="block py-2" href="/dashboard">Open Portal 👩‍💻🔥</a>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section id="home" class="hero-gradient min-h-screen flex items-center pt-16">
+    <div class="max-w-5xl mx-auto text-center px-4">
+      <h1 class="text-4xl md:text-6xl font-black text-white mb-2">🎯 AIMERS</h1>
+      <p class="text-xl md:text-2xl text-white font-bold mb-4">Always Ahead! — Chill + Study + Win 😎🏆</p>
+      <p class="text-white/90 mb-6 max-w-2xl mx-auto small-txt">Clear concepts, smart hacks, daily targets — aur tension kam, marks zyada. 🔥</p>
+
+      <div class="flex flex-col sm:flex-row gap-3 justify-center">
+        <button onclick="document.getElementById('courses').scrollIntoView({behavior:'smooth'})" class="bg-white text-maroon px-6 py-3 rounded-full font-bold hover:opacity-95">Start Now 🚀</button>
+        <a href="/dashboard" target="_blank" class="inline-flex items-center justify-center border-2 border-white text-white px-6 py-3 rounded-full font-semibold">Student Portal — Mark Attendance 👇</a>
+      </div>
+
+      <div class="mt-10">
+        <svg class="w-40 h-40 mx-auto" viewBox="0 0 200 200" aria-hidden>
+          <circle cx="100" cy="100" r="80" fill="white" opacity="0.06"/>
+          <circle cx="100" cy="100" r="50" fill="white" opacity="0.12"/>
+          <path d="M100 65 L117 95 L100 87 L83 95 Z" fill="white"/>
+        </svg>
+      </div>
+    </div>
+  </section>
+
+  <!-- COURSES -->
+  <section id="courses" class="py-12 bg-gray-50">
+    <div class="max-w-6xl mx-auto px-4">
+      <div class="text-center mb-8">
+        <h2 class="text-2xl md:text-3xl font-bold text-maroon">Courses — Chill, Learn, Win</h2>
+        <p class="text-gray-600 small-txt">From basics to boards — short hacks + daily targets.</p>
+      </div>
+
+      <div class="grid md:grid-cols-4 gap-4">
+        <div class="bg-maroon text-white rounded-2xl p-5 card-hover text-center">
+          <div class="text-2xl mb-2">📖</div>
+          <h3 class="font-bold">Classes 5-6</h3>
+          <p class="text-sm opacity-90">Basics strong banado 💪</p>
+        </div>
+        <div class="bg-maroon-light text-white rounded-2xl p-5 card-hover text-center">
+          <div class="text-2xl mb-2">🔬</div>
+          <h3 class="font-bold">Classes 7-8</h3>
+          <p class="text-sm opacity-90">Concepts on lock 🔒</p>
+        </div>
+        <div class="bg-maroon text-white rounded-2xl p-5 card-hover text-center">
+          <div class="text-2xl mb-2">📐</div>
+          <h3 class="font-bold">Classes 9-10</h3>
+          <p class="text-sm opacity-90">Boards? Chill, we got you 😌✍️</p>
+        </div>
+        <div class="bg-maroon-dark text-white rounded-2xl p-5 card-hover text-center">
+          <div class="text-2xl mb-2">🎓</div>
+          <h3 class="font-bold">Classes 11-12</h3>
+          <p class="text-sm opacity-90">Smart JEE/NEET prep 🚀</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- WHY AIMERS -->
+  <section id="why" class="py-12 bg-white">
+    <div class="max-w-6xl mx-auto px-4">
+      <div class="text-center mb-6">
+        <h2 class="text-2xl md:text-3xl font-bold text-maroon">Why AIMERS? — Short & Real</h2>
+      </div>
+
+      <div class="grid md:grid-cols-3 gap-4">
+        <div class="flex items-start gap-3">
+          <div class="bg-maroon rounded-full p-3 text-white">⚡</div>
+          <div><h4 class="font-semibold text-maroon">Fast Learning</h4><p class="text-gray-600 small-txt">Concepts jaldi fit baithenge 🧠✨</p></div>
+        </div>
+        <div class="flex items-start gap-3">
+          <div class="bg-maroon rounded-full p-3 text-white">🎯</div>
+          <div><h4 class="font-semibold text-maroon">Daily Targets</h4><p class="text-gray-600 small-txt">No excuses — short doable tasks 💯</p></div>
+        </div>
+        <div class="flex items-start gap-3">
+          <div class="bg-maroon rounded-full p-3 text-white">📌</div>
+          <div><h4 class="font-semibold text-maroon">Progress Track</h4><p class="text-gray-600 small-txt">Attendance, assignments & CSV exports 📊</p></div>
+        </div>
+        <div class="flex items-start gap-3">
+          <div class="bg-maroon rounded-full p-3 text-white">👥</div>
+          <div><h4 class="font-semibold text-maroon">Small Batches</h4><p class="text-gray-600 small-txt">Personal focus for real results ❤️</p></div>
+        </div>
+        <div class="flex items-start gap-3">
+          <div class="bg-maroon rounded-full p-3 text-white">💡</div>
+          <div><h4 class="font-semibold text-maroon">Smart Hacks</h4><p class="text-gray-600 small-txt">Shortcuts + PYQ tricks = faster prep 🔥</p></div>
+        </div>
+        <div class="flex items-start gap-3">
+          <div class="bg-maroon rounded-full p-3 text-white">🏅</div>
+          <div><h4 class="font-semibold text-maroon">Top Scores</h4><p class="text-gray-600 small-txt">Consistent high performers 💯</p></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TESTIMONIALS: Best real reviews (exact names taken from your file) -->
+  <section class="py-10 bg-gray-50">
+    <div class="max-w-6xl mx-auto px-4">
+      <h3 class="text-2xl font-bold text-maroon text-center mb-6">Students Speak ✨</h3>
+
+      <div class="grid md:grid-cols-3 gap-4">
+        <!-- Monika -->
+        <div class="bg-white p-5 rounded-xl card-hover">
+          <div class="flex items-center gap-3 mb-3">
+            <div class="w-10 h-10 rounded-full bg-maroon text-white flex items-center justify-center font-bold">M</div>
+            <div><strong>Monika Rohila</strong><div class="text-xs text-gray-500">3 months ago</div></div>
+          </div>
+          <p class="text-gray-800 small-txt">"Aimers has been a game-changer for me! The interactive classes and personalized attention have helped me excel. The supportive & friendly environment makes learning enjoyable and encourages growth. 🌟 Highly recommend joining Aimers for a mazedaar yet educational journey!"</p>
+        </div>
+
+        <!-- Dev -->
+        <div class="bg-white p-5 rounded-xl card-hover">
+          <div class="flex items-center gap-3 mb-3">
+            <div class="w-10 h-10 rounded-full bg-maroon text-white flex items-center justify-center font-bold">D</div>
+            <div><strong>Dev Disodia</strong><div class="text-xs text-gray-500">3 months ago</div></div>
+          </div>
+          <p class="text-gray-800 small-txt">"Aimers is an amazing tuition center! The teachers explain everything clearly, and the friendly atmosphere makes learning fun. I’ve improved a lot in my studies thanks to their support. Highly recommended."</p>
+        </div>
+
+        <!-- Ajay -->
+        <div class="bg-white p-5 rounded-xl card-hover">
+          <div class="flex items-center gap-3 mb-3">
+            <div class="w-10 h-10 rounded-full bg-maroon text-white flex items-center justify-center font-bold">A</div>
+            <div><strong>Ajay Kumar</strong><div class="text-xs text-gray-500">3 months ago</div></div>
+          </div>
+          <p class="text-gray-800 small-txt">"Honestly, my time at Aimers was life-changing! The classes were so much more than just academics — they helped me grow as a person. They balance theory and practical learning perfectly."</p>
+        </div>
+
+        <!-- Akshat -->
+        <div class="bg-white p-5 rounded-xl card-hover">
+          <div class="flex items-center gap-3 mb-3">
+            <div class="w-10 h-10 rounded-full bg-maroon text-white flex items-center justify-center font-bold">Ak</div>
+            <div><strong>Akshat</strong><div class="text-xs text-gray-500">3 months ago (edited)</div></div>
+          </div>
+          <p class="text-gray-800 small-txt">"I've had a fantastic experience with this tuition! The teaching methods are clear, engaging, and easy to understand. The tutor is incredibly knowledgeable and patient — my grades have improved."</p>
+        </div>
+
+        <!-- Khushi -->
+        <div class="bg-white p-5 rounded-xl card-hover">
+          <div class="flex items-center gap-3 mb-3">
+            <div class="w-10 h-10 rounded-full bg-maroon text-white flex items-center justify-center font-bold">K</div>
+            <div><strong>Khushi Sharma</strong><div class="text-xs text-gray-500">6 months ago</div></div>
+          </div>
+          <p class="text-gray-800 small-txt">"AIMERS is the best! 🌟 Their way of teaching is unique, with experiments and fun activities in between. Study with fun hai yaha — 90+ marks bhi sure hai agar AIMERS mai padho tho 🥳"</p>
+        </div>
+      </div>
+
+      <div class="text-center mt-6 text-sm text-gray-500">Real student & parent reviews (pulled from AIMERS listings).</div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact" class="py-12 bg-white">
+    <div class="max-w-5xl mx-auto px-4">
+      <div class="text-center mb-6">
+        <h2 class="text-2xl font-bold text-maroon">Ping Us — Quick & Simple</h2>
+        <p class="text-gray-600 small-txt">Apna naam likh de yaar 🙌 — we’ll reply fast.</p>
+      </div>
+
+      <div class="grid md:grid-cols-2 gap-6">
+        <form id="contactForm" class="space-y-3">
+          <input id="name" required placeholder="Apna naam likh de yaar 🙌" class="w-full px-4 py-3 border rounded-lg focus:border-maroon" />
+          <input id="email" type="email" required placeholder="Email (so we can ping back)" class="w-full px-4 py-3 border rounded-lg focus:border-maroon" />
+          <input id="phone" required placeholder="Phone number" class="w-full px-4 py-3 border rounded-lg focus:border-maroon" />
+          <select id="classSel" required class="w-full px-4 py-3 border rounded-lg focus:border-maroon">
+            <option value="">Select class — tu kis class me hai?</option>
+            <option>5</option><option>6</option><option>7</option><option>8</option><option>9</option><option>10</option><option>11</option><option>12</option>
+          </select>
+          <textarea id="message" rows="3" placeholder="Bol kya scene hai? 🤔📢" class="w-full px-4 py-3 border rounded-lg focus:border-maroon"></textarea>
+          <button type="submit" class="w-full bg-maroon text-white py-3 rounded-full font-bold">Ping AIMERS 📩</button>
+        </form>
+
+        <div class="space-y-4">
+          <div class="bg-gray-50 p-4 rounded-xl">
+            <h4 class="font-semibold text-maroon">Contact</h4>
+            <p class="text-sm text-gray-600">+91 98765 43210</p>
+            <p class="text-sm text-gray-600">info@aimers.edu</p>
+          </div>
+
+          <a href="https://wa.me/919876543210?text=Hi%20AIMERS%2C%20I%20want%20admission%20info%20%F0%9F%98%8E" target="_blank" class="inline-flex items-center justify-center bg-green-500 text-white px-4 py-3 rounded-full font-semibold">
+            Ping on WhatsApp 📲😎
+          </a>
+
+          <p class="text-xs text-gray-500">Fast replies on WhatsApp — jaldi connect ho jayega.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="py-6 text-center text-sm text-gray-500">© <span id="yr"></span> AIMERS • Chill + Study + Win</footer>
+
+  <script>
+    // mobile nav
+    document.getElementById('mBtn').addEventListener('click', ()=>document.getElementById('mNav').classList.toggle('hidden'));
+    document.getElementById('yr').textContent = new Date().getFullYear();
+
+    // contact form -> simple fallback to WhatsApp if POST fails
+    (function(){
+      const form = document.getElementById('contactForm');
+      const waNumber = '919876543210';
+      form.addEventListener('submit', async function(e){
+        e.preventDefault();
+        const name = document.getElementById('name').value.trim();
+        const email = document.getElementById('email').value.trim();
+        const phone = document.getElementById('phone').value.trim();
+        const cls = document.getElementById('classSel').value;
+        const message = document.getElementById('message').value.trim();
+        if(!name||!email||!phone||!cls){ alert('Please fill required fields 🙏'); return; }
+        const payload = { name,email,phone,class:cls,message,createdAt:new Date().toISOString() };
+        try{
+          const res = await fetch('/api/contact',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)});
+          if(res.ok){ alert('Thanks! We will ping you soon 😊'); form.reset(); return; }
+          throw new Error('API failed');
+        }catch(err){
+          const text = encodeURIComponent(`Hi AIMERS, I'm ${name} (Class ${cls}). ${message ? message : ''} Contact: ${phone}`);
+          if(confirm('Auto-submit failed. Send details via WhatsApp?')) window.open(`https://wa.me/${waNumber}?text=${text}`,'_blank');
+        }
+      });
+    })();
+  </script>
+</body>
+</html>
