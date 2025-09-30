@@ -1,4 +1,4 @@
-// api/aim-mitr.js — Gemini 1.5 Flash, frank+Hinglish, convo memory + random closers
+// api/aim-mitr.js — Gemini (model via GEMINI_MODEL), frank+Hinglish, small-talk, memory, random closers
 
 export default async function handler(req, res) {
   res.setHeader('Access-Control-Allow-Origin','*');
@@ -11,68 +11,66 @@ export default async function handler(req, res) {
   const question = (body?.question || '').trim();
   const cls = (body?.cls || '').trim();
   const subject = (body?.subject || '').trim();
-  const history = Array.isArray(body?.history) ? body.history.slice(-6) : []; // [{role:'user'|'assistant', content:'...'}]
+  const history = Array.isArray(body?.history) ? body.history.slice(-6) : [];
   if (!question) return res.status(400).json({ error:'empty question' });
 
-  // closers pool (random, varied)
   const CLOSERS = [
-    "Kuch aur chahiye to pooch le — main yahi hoon. Chal, padh le ✌️",
-    "Aur doubt? Bol de bina sharmaye. Ab focus on padhai 🔥",
-    "Samajh aa gaya? Nahi to dubara pooch — main yahin hu. Ab thoda practice kar 💪",
-    "Next doubt bhej, I got you. Warna abhi ke liye notes revise kar 📒",
-    "Clear hai? Great. Agar atka to ping — ab seedha padhai mode on 🚀",
-    "Aur kuch? Main standby pe hoon. Chalo, smart study karte hain 😎",
-    "Question khatam, excuses bhi khatam. Ab mehnat on — poochna ho to bol na 😉",
+    "Koi aur doubt ho to puch le, main yahin hoon. Chal, padh le ✌️",
+    "Aur kuch? Bindaas pooch. Ab thoda practice on 🔥",
+    "Samajh aaya? Nahi to dubara pooch. Ab focus mode on 💪",
+    "Next doubt bhej de, warna notes revise kar 📒",
+    "Clear ho gaya? Great. Atka to ping — ab padhai pe dhyaan 🚀",
+    "Main standby pe hoon — pooch le. Ab smart study karte hain 😎",
+    "Excuses nahi, questions chahiye. Bol na 😉"
   ];
   const closer = CLOSERS[Math.floor(Math.random()*CLOSERS.length)];
 
-  // tone & rules
+  const ST = /^(hi+|hello+|hey+|yo+|hola|namaste|namaskar|how\s*are\s*you|sup|kya\s*haal|good\s*(morning|evening|afternoon))\b/i;
+  if (ST.test(question)) {
+    const msg = [
+      "Hey! 👋 Mood set hai. Ab kaam ki baat — class & subject set karke apna doubt type kar 😎",
+      closer
+    ].join("<br><br>");
+    return res.status(200).json({ answer: msg });
+  }
+
   const system = `
 You are "AIM-Mitr": a genie-like senior friend for CBSE students.
 Style: frank, witty, motivating; Hinglish + English; strictly school-safe.
 Never include links, sources, citations, or site names. No "according to..." lines.
-If user is toxic/abusive: reply with a short, classy, savage comeback — but no profanity.
+If user is toxic/abusive: classy, savage comeback — no profanity.
 Answer rules:
 • Concept -> 3–6 crisp lines + tiny example.
 • Problem -> 2–6 bullet steps + final answer.
 • Add 1–2 practice tips when useful.
 • Adapt to Class and Subject.
 • Mobile-friendly, concise, no headings.
-• End with a friendly closer (I will append one).
 `;
 
-  // build conversation for Gemini
   const contents = [];
-  contents.push({ role: "user", parts: [{ text: system }]});
-  for (const turn of history) {
-    contents.push({
-      role: turn.role === 'assistant' ? 'model' : 'user',
-      parts: [{ text: turn.content }]
-    });
+  contents.push({ role:"user", parts:[{ text: system }]});
+  for (const t of history) {
+    contents.push({ role: t.role === 'assistant' ? 'model' : 'user', parts: [{ text: t.content }]});
   }
-  const userPrompt = `Class: ${cls || 'NA'}\nSubject: ${subject || 'NA'}\nDoubt: ${question}`;
-  contents.push({ role:"user", parts:[{ text: userPrompt }]});
+  contents.push({ role:"user", parts:[{ text: `Class: ${cls || 'NA'}\nSubject: ${subject || 'NA'}\nDoubt: ${question}` }]});
 
   try {
     const apiKey = process.env.GEMINI_API_KEY;
     if (!apiKey) return res.status(500).json({ error:'Missing GEMINI_API_KEY' });
 
-    const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`;
+    const model = process.env.GEMINI_MODEL || 'gemini-1.5-flash'; // 👈 configurable
+    const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/${encodeURIComponent(model)}:generateContent?key=${apiKey}`;
+
     const payload = { contents, generationConfig:{ temperature:0.55 } };
 
     const r = await fetch(endpoint, {
-      method:'POST', headers:{'Content-Type':'application/json'},
-      body: JSON.stringify(payload)
+      method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify(payload)
     });
     const j = await r.json();
 
-    let text = j?.candidates?.[0]?.content?.parts?.map(p=>p.text).join('\n')
-              || 'Glitch ho gaya. Doubt ek line me dubara bhej 🙂';
-
+    let text = extractText(j) || 'Glitch ho gaya. Doubt ek line me dubara bhej 🙂';
     text = stripLinks(text);
-
-    // add random closer once
-    text += `\n\n${closer}`;
+    text += `<br><br>${closer}`;
 
     return res.status(200).json({ answer: text.replace(/\n/g,'<br>') });
   } catch (e) {
@@ -86,8 +84,19 @@ function readJson(req){ return new Promise(resolve=>{
   req.on('end',()=>{ try{ resolve(JSON.parse(d||'{}')); } catch{ resolve({}); } });
   req.on('error',()=>resolve({}));
 });}
+function extractText(j){
+  if (j?.candidates?.[0]?.content?.parts) {
+    return j.candidates[0].content.parts.map(p=>p.text||'').join('\n').trim();
+  }
+  if (j?.candidates?.[0]?.content?.parts?.[0]?.text) return j.candidates[0].content.parts[0].text;
+  if (j?.candidates?.[0]?.output) return j.candidates[0].output;
+  return '';
+}
 function stripLinks(t){
-  return t.replace(/https?:\/\/\S+/gi,'')
-          .replace(/(source|sources|citation|references)\s*:\s*.*$/gim,'')
-          .replace(/[ \t]+\n/g,'\n').trim();
+  return (t||'')
+    .replace(/https?:\/\/\S+/gi,'')
+    .replace(/(source|sources|citation|references)\s*:\s*.*$/gim,'')
+    .replace(/\(\s*see.*?\)/gi,'')
+    .replace(/[ \t]+\n/g,'\n')
+    .trim();
 }
