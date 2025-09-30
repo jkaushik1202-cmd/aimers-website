@@ -2,247 +2,385 @@
 <html lang="en">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>AIMERS — GSAP Demo</title>
-  <meta name="description" content="AIMERS — demo with GSAP ScrollTrigger animations + Lottie" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>AIMERS - Always Ahead! 🎯</title>
+  <meta name="description" content="AIMERS — Chill + Study + Win. CBSE coaching with attendance, assignments & student portal." />
   <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            maroon: '#800020',
+            'maroon-light': '#a0002a',
+            'maroon-dark': '#600018'
+          }
+        }
+      }
+    }
+  </script>
 
-  <!-- Lottie player -->
+  <!-- AOS (scroll animations) -->
+  <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet" />
+  <!-- Lottie (for optional hero animation) -->
   <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
-  <!-- GSAP + ScrollTrigger -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
 
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
-    :root{
-      --maroon:#800020; --maroon-light:#a0002a; --maroon-dark:#600018;
-    }
-    *{box-sizing:border-box;font-family:'Poppins',sans-serif}
-    body{background:#fff;color:#111;line-height:1.45}
-    .hero-gradient{background:linear-gradient(135deg,var(--maroon) 0%,var(--maroon-light) 100%)}
-    .card { border-radius:1rem; padding:1.25rem; background:white; box-shadow:0 6px 22px rgba(0,0,0,0.06) }
-    .glass { background: rgba(255,255,255,0.85); backdrop-filter: blur(6px); }
-    /* small tweaks for GSAP transforms */
-    .reveal{opacity:0; transform:translateY(30px)}
-    .reveal-x{opacity:0; transform:translateX(-40px)}
+    body{font-family:'Poppins',sans-serif;box-sizing:border-box}
+    .gradient-bg{background:linear-gradient(135deg,#800020 0%,#a0002a 100%)}
+    .card-hover{transition:all .3s ease}
+    .card-hover:hover{transform:translateY(-8px);box-shadow:0 20px 40px rgba(128,0,32,.18)}
+    .small-txt{font-size:.95rem}
+
+    /* AIM-Mitr chat styles */
+    .aimmitr-btn{position:fixed;right:20px;bottom:20px;background:#800020;color:#fff;border:none;
+      width:58px;height:58px;border-radius:50%;box-shadow:0 12px 28px rgba(128,0,32,.25);
+      font-size:22px;cursor:pointer;z-index:60}
+    .aimmitr-panel{position:fixed;right:20px;bottom:90px;width:340px;max-height:70vh;background:#fff;
+      border-radius:16px;box-shadow:0 18px 40px rgba(0,0,0,.18);display:none;flex-direction:column;overflow:hidden;z-index:60}
+    .aimmitr-header{background:linear-gradient(135deg,#800020,#a0002a);color:#fff;padding:12px 14px;display:flex;justify-content:space-between;align-items:center}
+    .aimmitr-body{padding:10px;height:50vh;overflow:auto;background:#fafafa}
+    .aimmitr-msg{margin:8px 0;display:flex;gap:8px}
+    .aimmitr-msg.you{justify-content:flex-end}
+    .aimmitr-bubble{max-width:78%;padding:10px 12px;border-radius:14px;font-size:.95rem;line-height:1.35}
+    .aimmitr-bubble.bot{background:#fff;border:1px solid #eee}
+    .aimmitr-bubble.you{background:#800020;color:#fff}
+    .aimmitr-foot{display:flex;gap:6px;padding:10px;background:#fff;border-top:1px solid #eee}
+    .aimmitr-foot input, .aimmitr-foot select{border:1px solid #ddd;border-radius:10px;padding:8px}
+    .aimchip{display:inline-block;background:#f1f1f1;border:1px solid #e5e5e5;border-radius:999px;padding:4px 10px;margin:4px 6px;font-size:.85rem;cursor:pointer}
+    .aimlink{color:#800020;font-weight:600}
   </style>
 </head>
-<body>
+<body class="bg-white">
 
   <!-- NAV -->
-  <header class="fixed w-full z-40">
-    <nav class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+  <nav class="fixed w-full top-0 z-50 bg-white shadow-lg">
+    <div class="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between" data-aos="fade-down">
       <div class="flex items-center gap-3">
-        <div class="text-2xl font-extrabold" style="color:var(--maroon)">🎯 AIMERS</div>
-        <div class="text-sm text-gray-600 hidden sm:block">Chill • Study • Win</div>
+        <span class="text-2xl font-extrabold text-maroon">🎯 AIMERS</span>
+        <span class="text-xs text-gray-500 hidden sm:inline">Chill • Study • Win</span>
       </div>
       <div class="hidden md:flex items-center gap-4">
-        <a class="text-sm text-gray-700 hover:text-[var(--maroon)]" href="#courses">Courses</a>
-        <a class="text-sm text-gray-700 hover:text-[var(--maroon)]" href="#why">Why</a>
-        <a class="text-sm text-gray-700 hover:text-[var(--maroon)]" href="#reviews">Reviews</a>
-        <a class="bg-[var(--maroon)] text-white px-3 py-2 rounded-full text-sm" href="#contact">Contact</a>
+        <a href="#home" class="text-maroon font-semibold">Home</a>
+        <a href="#courses" class="text-gray-700 hover:text-maroon">Courses</a>
+        <a href="#why" class="text-gray-700 hover:text-maroon">Why AIMERS?</a>
+        <a href="#contact" class="text-gray-700 hover:text-maroon">Contact</a>
+        <a href="/dashboard" target="_blank" class="bg-maroon text-white px-3 py-2 rounded-full font-semibold ml-2">Open Portal 👩‍💻🔥</a>
       </div>
-    </nav>
-  </header>
+      <button id="mBtn" class="md:hidden px-3 py-2 border rounded">☰</button>
+    </div>
+    <div id="mNav" class="md:hidden hidden px-4 pb-3">
+      <a class="block py-2" href="/dashboard">Open Portal 👩‍💻🔥</a>
+    </div>
+  </nav>
 
   <!-- HERO -->
-  <section id="home" class="hero-gradient min-h-screen flex items-center pt-20">
-    <div class="max-w-7xl mx-auto px-6 grid lg:grid-cols-2 gap-10 items-center">
-      <div>
-        <h1 class="text-white text-4xl md:text-6xl font-extrabold mb-4 reveal">🎯 AIMERS</h1>
-        <p class="text-white/90 text-lg md:text-2xl mb-6 reveal" style="max-width:520px">
-          Always Ahead — Chill + Study + Win 😎🏆<br>
-          Clear concepts, daily targets, and smart hacks to beat the boards.
-        </p>
-        <div class="flex gap-3">
-          <button id="cta1" class="bg-white text-[var(--maroon)] rounded-full px-6 py-3 font-semibold reveal">Start Your Journey 🚀</button>
-          <a id="cta2" class="inline-flex items-center justify-center border-2 border-white text-white px-6 py-3 rounded-full font-semibold reveal" href="#contact">Student Portal 👩‍💻</a>
-        </div>
-        <p class="text-white/80 mt-6 small-txt reveal" style="max-width:520px">Demo with GSAP animations — scroll down to see cards animate like a pro coaching site.</p>
+  <section id="home" class="gradient-bg min-h-screen flex items-center pt-16">
+    <div class="max-w-5xl mx-auto text-center px-4 py-20">
+      <h1 class="text-4xl md:text-6xl font-black text-white mb-2" data-aos="zoom-in">🎯 AIMERS</h1>
+      <p class="text-xl md:text-2xl text-white font-bold mb-4" data-aos="zoom-in" data-aos-delay="100">
+        Always Ahead! — Chill + Study + Win 😎🏆
+      </p>
+      <p class="text-white/90 mb-6 max-w-2xl mx-auto small-txt" data-aos="fade-up" data-aos-delay="200">
+        Clear concepts, smart hacks, daily targets — aur tension kam, marks zyada. 🔥
+      </p>
+
+      <div class="flex flex-col sm:flex-row gap-3 justify-center" data-aos="fade-up" data-aos-delay="250">
+        <button onclick="document.getElementById('courses').scrollIntoView({behavior:'smooth'})" class="bg-white text-maroon px-6 py-3 rounded-full font-bold hover:opacity-95">Start Now 🚀</button>
+        <a href="/dashboard" target="_blank" class="inline-flex items-center justify-center border-2 border-white text-white px-6 py-3 rounded-full font-semibold">Student Portal — Mark Attendance 👇</a>
       </div>
 
-      <div class="flex justify-center">
-        <!-- Lottie animation -->
-        <div class="w-80 h-80 bg-white rounded-2xl flex items-center justify-center card">
-          <lottie-player src="https://assets6.lottiefiles.com/packages/lf20_jcikwtux.json"  background="transparent"  speed="1"  style="width:320px; height:320px;"  loop  autoplay></lottie-player>
+      <!-- Optional Lottie (comment out if not needed) -->
+      <div class="mt-8 flex justify-center" data-aos="fade-up" data-aos-delay="300">
+        <lottie-player src="https://assets6.lottiefiles.com/packages/lf20_jcikwtux.json" background="transparent" speed="1" style="width:220px;height:220px" loop autoplay></lottie-player>
+      </div>
+    </div>
+  </section>
+
+  <!-- COURSES -->
+  <section id="courses" class="py-12 bg-gray-50">
+    <div class="max-w-6xl mx-auto px-4">
+      <div class="text-center mb-8" data-aos="fade-up">
+        <h2 class="text-2xl md:text-3xl font-bold text-maroon">Courses — Chill, Learn, Win</h2>
+        <p class="text-gray-600 small-txt">From basics to boards — short hacks + daily targets.</p>
+      </div>
+
+      <div class="grid md:grid-cols-4 gap-4">
+        <div class="bg-maroon text-white rounded-2xl p-5 card-hover text-center" data-aos="fade-up">
+          <div class="text-2xl mb-2">📖</div>
+          <h3 class="font-bold">Classes 5-8</h3>
+          <p class="text-sm opacity-90">Basics strong banado 💪</p>
+        </div>
+        <div class="bg-maroon-light text-white rounded-2xl p-5 card-hover text-center" data-aos="fade-up" data-aos-delay="100">
+          <div class="text-2xl mb-2">🔬</div>
+          <h3 class="font-bold">Classes 9-10</h3>
+          <p class="text-sm opacity-90">Boards? Chill, we got you 😌✍️</p>
+        </div>
+        <div class="bg-maroon text-white rounded-2xl p-5 card-hover text-center" data-aos="fade-up" data-aos-delay="200">
+          <div class="text-2xl mb-2">🧮</div>
+          <h3 class="font-bold">Class 11</h3>
+          <p class="text-sm opacity-90">Stream-wise specialization</p>
+        </div>
+        <div class="bg-maroon-dark text-white rounded-2xl p-5 card-hover text-center" data-aos="fade-up" data-aos-delay="300">
+          <div class="text-2xl mb-2">🎓</div>
+          <h3 class="font-bold">Class 12</h3>
+          <p class="text-sm opacity-90">Board exam mastery</p>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- COURSES (animated cards) -->
-  <section id="courses" class="py-20 bg-gray-50">
-    <div class="max-w-7xl mx-auto px-6">
-      <h2 class="text-3xl font-bold text-[var(--maroon)] mb-6 reveal-x">Our Courses</h2>
-      <p class="text-gray-600 mb-8 reveal-x">From foundation to boards — short focused modules, mock tests & doubt sessions.</p>
+  <!-- WHY AIMERS -->
+  <section id="why" class="py-12 bg-white">
+    <div class="max-w-6xl mx-auto px-4">
+      <div class="text-center mb-6" data-aos="fade-up">
+        <h2 class="text-2xl md:text-3xl font-bold text-maroon">Why AIMERS? — Short & Real</h2>
+      </div>
 
-      <div class="grid md:grid-cols-4 gap-6">
-        <div class="card reveal" data-gsap-delay="0.0">
-          <div class="text-3xl mb-3">📖</div>
-          <h3 class="font-semibold text-lg">Classes 5-8</h3>
-          <p class="text-gray-600 mt-2">Foundation building with interactive learning.</p>
+      <div class="grid md:grid-cols-3 gap-4">
+        <div class="flex items-start gap-3" data-aos="fade-up">
+          <div class="bg-maroon rounded-full p-3 text-white">⚡</div>
+          <div><h4 class="font-semibold text-maroon">Fast Learning</h4><p class="text-gray-600 small-txt">Concepts jaldi fit baithenge 🧠✨</p></div>
         </div>
-        <div class="card reveal" data-gsap-delay="0.08">
-          <div class="text-3xl mb-3">🔬</div>
-          <h3 class="font-semibold text-lg">Classes 9-10</h3>
-          <p class="text-gray-600 mt-2">Board exam prep with smart strategies.</p>
+        <div class="flex items-start gap-3" data-aos="fade-up" data-aos-delay="100">
+          <div class="bg-maroon rounded-full p-3 text-white">🎯</div>
+          <div><h4 class="font-semibold text-maroon">Daily Targets</h4><p class="text-gray-600 small-txt">No excuses — short doable tasks 💯</p></div>
         </div>
-        <div class="card reveal" data-gsap-delay="0.16">
-          <div class="text-3xl mb-3">🧮</div>
-          <h3 class="font-semibold text-lg">Class 11</h3>
-          <p class="text-gray-600 mt-2">Stream-wise specialization & skill growth.</p>
-        </div>
-        <div class="card reveal" data-gsap-delay="0.24">
-          <div class="text-3xl mb-3">🎓</div>
-          <h3 class="font-semibold text-lg">Class 12</h3>
-          <p class="text-gray-600 mt-2">Board mastery + career guidance.</p>
+        <div class="flex items-start gap-3" data-aos="fade-up" data-aos-delay="200">
+          <div class="bg-maroon rounded-full p-3 text-white">📌</div>
+          <div><h4 class="font-semibold text-maroon">Progress Track</h4><p class="text-gray-600 small-txt">Attendance, assignments & CSV exports 📊</p></div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- WHY CHOOSE US (stagger + pin example) -->
-  <section id="why" class="py-24">
-    <div class="max-w-7xl mx-auto px-6">
-      <div class="grid lg:grid-cols-2 gap-10 items-center">
-        <div>
-          <h2 class="text-3xl font-bold text-[var(--maroon)] mb-4 reveal-x">Why AIMERS?</h2>
-          <p class="text-gray-700 mb-6 reveal-x">Daily targets, small batches, progress tracking and digital tools — built to make learning efficient and enjoyable.</p>
+  <!-- TESTIMONIALS -->
+  <section class="py-16 bg-gray-50">
+    <div class="max-w-7xl mx-auto px-4">
+      <div class="text-center mb-12" data-aos="fade-up">
+        <h2 class="text-3xl font-bold text-maroon mb-2">What Students & Parents Say</h2>
+        <p class="text-gray-600">Real feedback from students who learned, grew & scored with AIMERS</p>
+      </div>
 
-          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <div class="card reveal" data-gsap-delay="0.05">🎯 <strong>Daily Targets</strong><div class="text-sm text-gray-600">Short doable tasks each day.</div></div>
-            <div class="card reveal" data-gsap-delay="0.10">👥 <strong>Small Batches</strong><div class="text-sm text-gray-600">Personal attention for every student.</div></div>
-            <div class="card reveal" data-gsap-delay="0.15">📝 <strong>Weekly Tests</strong><div class="text-sm text-gray-600">Mocks and performance analysis.</div></div>
-            <div class="card reveal" data-gsap-delay="0.20">💻 <strong>Digital Notes</strong><div class="text-sm text-gray-600">Printable & mobile-friendly materials.</div></div>
-          </div>
-        </div>
-
-        <div class="relative h-96">
-          <!-- GSAP ScrollTrigger example: pinned mock timeline visual -->
-          <div id="timeline" class="w-full h-full rounded-2xl bg-gradient-to-r from-white to-gray-50 card flex items-center justify-center">
-            <div class="text-center">
-              <div class="text-sm text-gray-500 mb-2">Progress Snapshot</div>
-              <div class="text-4xl font-bold text-[var(--maroon)]">+ 95% Focus</div>
-              <div class="text-gray-600 mt-2">Small batches + daily targets = consistent growth</div>
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div class="bg-white p-6 rounded-2xl card-hover" data-aos="fade-up">
+          <div class="flex items-center gap-3 mb-3">
+            <div class="w-12 h-12 rounded-full bg-maroon text-white flex items-center justify-center font-bold">K</div>
+            <div>
+              <div class="font-bold text-maroon">Kunal Sharma</div>
+              <div class="text-xs text-gray-500">⭐⭐⭐⭐⭐</div>
             </div>
           </div>
+          <p class="text-gray-700 small-txt">
+            I had a wonderful experience at Aimers! Positive vibe, toughest concepts made easy-peasy 🚀. Crisp notes + regular tests keep you sharp. <strong>“Be Ahead With Aimers”</strong>.
+          </p>
         </div>
-      </div>
-    </div>
-  </section>
 
-  <!-- TESTIMONIALS (carousel-like animation) -->
-  <section id="reviews" class="py-20 bg-gray-50">
-    <div class="max-w-7xl mx-auto px-6">
-      <h3 class="text-3xl font-bold text-[var(--maroon)] mb-6 reveal-x">Student Love</h3>
-      <div class="grid md:grid-cols-3 gap-6">
-        <div class="card reveal" data-gsap-delay="0.05">
-          <div class="font-bold text-[var(--maroon)] mb-2">Kunal Sharma — ⭐⭐⭐⭐⭐</div>
-          <p class="text-gray-700 small-txt">“Wonderful experience - teachers make even the toughest concepts easy-peasy. Notes are crisp & tests keep you sharp.”</p>
+        <div class="bg-white p-6 rounded-2xl card-hover" data-aos="fade-up" data-aos-delay="100">
+          <div class="flex items-center gap-3 mb-3">
+            <div class="w-12 h-12 rounded-full bg-maroon text-white flex items-center justify-center font-bold">A</div>
+            <div>
+              <div class="font-bold text-maroon">Akshat</div>
+              <div class="text-xs text-gray-500">⭐⭐⭐⭐⭐</div>
+            </div>
+          </div>
+          <p class="text-gray-700 small-txt">
+            AIMERS is a catalyst 🎯 — mentors who explain, motivate & push you to do better. Personal attention, real results & confidence boost 💎.
+          </p>
         </div>
-        <div class="card reveal" data-gsap-delay="0.12">
-          <div class="font-bold text-[var(--maroon)] mb-2">Akshat — ⭐⭐⭐⭐⭐</div>
-          <p class="text-gray-700 small-txt">“AIMERS is a catalyst — mentors, friends, and guides. Personalized attention & real results.”</p>
+
+        <div class="bg-white p-6 rounded-2xl card-hover" data-aos="fade-up" data-aos-delay="200">
+          <div class="flex items-center gap-3 mb-3">
+            <div class="w-12 h-12 rounded-full bg-maroon text-white flex items-center justify-center font-bold">S</div>
+            <div>
+              <div class="font-bold text-maroon">Saba</div>
+              <div class="text-xs text-gray-500">⭐⭐⭐⭐</div>
+            </div>
+          </div>
+          <p class="text-gray-700 small-txt">
+            More than tuition, a second home 💕. Growth, laughter & mentors who care beyond exams.
+          </p>
         </div>
-        <div class="card reveal" data-gsap-delay="0.19">
-          <div class="font-bold text-[var(--maroon)] mb-2">Saba — ⭐⭐⭐⭐</div>
-          <p class="text-gray-700 small-txt">“More than tuition — a second home. Supportive teachers & fun learning.”</p>
+
+        <div class="bg-white p-6 rounded-2xl card-hover" data-aos="fade-up">
+          <div class="flex items-center gap-3 mb-3">
+            <div class="w-12 h-12 rounded-full bg-maroon text-white flex items-center justify-center font-bold">O</div>
+            <div>
+              <div class="font-bold text-maroon">Ojal Singh</div>
+              <div class="text-xs text-gray-500">⭐⭐⭐⭐</div>
+            </div>
+          </div>
+          <p class="text-gray-700 small-txt">
+            Yaha padhai ke saath memories bhi banti hain 🎯. Sibling-like support, even late night help. Let’s aim together!
+          </p>
+        </div>
+
+        <div class="bg-white p-6 rounded-2xl card-hover" data-aos="fade-up" data-aos-delay="100">
+          <div class="flex items-center gap-3 mb-3">
+            <div class="w-12 h-12 rounded-full bg-maroon text-white flex items-center justify-center font-bold">D</div>
+            <div>
+              <div class="font-bold text-maroon">ds Sharma</div>
+              <div class="text-xs text-gray-500">⭐⭐⭐⭐</div>
+            </div>
+          </div>
+          <p class="text-gray-700 small-txt">
+            From D grade in Math to 95.4% in Boards 🔥 — teachers first feel like friends, then mentors. Game-changer!
+          </p>
+        </div>
+
+        <div class="bg-white p-6 rounded-2xl card-hover" data-aos="fade-up" data-aos-delay="200">
+          <div class="flex items-center gap-3 mb-3">
+            <div class="w-12 h-12 rounded-full bg-maroon text-white flex items-center justify-center font-bold">D</div>
+            <div>
+              <div class="font-bold text-maroon">Divyanshi (Class 9)</div>
+              <div class="text-xs text-gray-500">⭐⭐⭐⭐</div>
+            </div>
+          </div>
+          <p class="text-gray-700 small-txt">
+            Exam time = extra care + notes for revision. Teachers reply day/night — super friendly & helpful ✨.
+          </p>
         </div>
       </div>
+
+      <div class="text-center mt-8 text-sm text-gray-500">Real student/parent highlights — edited for clarity & UI.</div>
     </div>
   </section>
 
   <!-- CONTACT -->
-  <section id="contact" class="py-20 bg-white">
-    <div class="max-w-5xl mx-auto px-6">
-      <h3 class="text-2xl font-bold text-[var(--maroon)] mb-4 reveal-x">Get in touch</h3>
+  <section id="contact" class="py-12 bg-white">
+    <div class="max-w-5xl mx-auto px-4">
+      <div class="text-center mb-6" data-aos="fade-up">
+        <h2 class="text-2xl font-bold text-maroon">Ping Us — Quick & Simple</h2>
+        <p class="text-gray-600 small-txt">Apna naam likh de yaar 🙌 — we’ll reply fast.</p>
+      </div>
+
       <div class="grid md:grid-cols-2 gap-6">
-        <form class="space-y-3 card reveal">
-          <input class="w-full px-4 py-3 rounded-lg border" placeholder="Name" />
-          <input class="w-full px-4 py-3 rounded-lg border" placeholder="Email" />
-          <input class="w-full px-4 py-3 rounded-lg border" placeholder="Phone" />
-          <select class="w-full px-4 py-3 rounded-lg border">
-            <option>Select Class</option>
-            <option>5-8</option><option>9-10</option><option>11</option><option>12</option>
+        <form id="contactForm" class="space-y-3" data-aos="fade-right">
+          <input id="name" required placeholder="Apna naam likh de yaar 🙌" class="w-full px-4 py-3 border rounded-lg focus:border-maroon" />
+          <input id="email" type="email" required placeholder="Email (so we can ping back)" class="w-full px-4 py-3 border rounded-lg focus:border-maroon" />
+          <input id="phone" required placeholder="Phone number" class="w-full px-4 py-3 border rounded-lg focus:border-maroon" />
+          <select id="classSel" required class="w-full px-4 py-3 border rounded-lg focus:border-maroon">
+            <option value="">Select class — tu kis class me hai?</option>
+            <option>5</option><option>6</option><option>7</option><option>8</option><option>9</option><option>10</option><option>11</option><option>12</option>
           </select>
-          <textarea class="w-full px-4 py-3 rounded-lg border" rows="4" placeholder="Message"></textarea>
-          <button class="bg-[var(--maroon)] text-white px-4 py-3 rounded-lg font-semibold">Send Message</button>
+          <textarea id="message" rows="3" placeholder="Bol kya scene hai? 🤔📢" class="w-full px-4 py-3 border rounded-lg focus:border-maroon"></textarea>
+          <button type="submit" class="w-full bg-maroon text-white py-3 rounded-full font-bold">Ping AIMERS 📩</button>
         </form>
-        <div class="space-y-4">
-          <div class="card reveal">
-            <h4 class="font-semibold text-[var(--maroon)]">Contact</h4>
+
+        <div class="space-y-4" data-aos="fade-left">
+          <div class="bg-gray-50 p-4 rounded-xl">
+            <h4 class="font-semibold text-maroon">Contact</h4>
             <p class="text-sm text-gray-600">+91 98765 43210</p>
             <p class="text-sm text-gray-600">info@aimers.edu</p>
           </div>
-          <div class="card reveal">
-            <h4 class="font-semibold text-[var(--maroon)]">Address</h4>
-            <p class="text-sm text-gray-600">123 Education Street, Learning City</p>
-          </div>
+
+          <a href="https://wa.me/919876543210?text=Hi%20AIMERS%2C%20I%20want%20admission%20info%20%F0%9F%98%8E" target="_blank" class="inline-flex items-center justify-center bg-green-500 text-white px-4 py-3 rounded-full font-semibold">
+            Ping on WhatsApp 📲😎
+          </a>
+
+          <p class="text-xs text-gray-500">Fast replies on WhatsApp — jaldi connect ho jayega.</p>
         </div>
       </div>
     </div>
   </section>
 
-  <footer class="py-8 text-center text-sm text-gray-500">© <span id="yr"></span> AIMERS • Chill + Study + Win</footer>
+  <footer class="py-6 text-center text-sm text-gray-500">© <span id="yr"></span> AIMERS • Chill + Study + Win</footer>
 
-  <!-- GSAP init script -->
+  <!-- AIM-Mitr Chat Widget -->
+  <button class="aimmitr-btn" id="aimBtn" aria-label="Open AIM-Mitr">🤖</button>
+  <div class="aimmitr-panel" id="aimPanel" role="dialog" aria-label="AIM-Mitr chat">
+    <div class="aimmitr-header">
+      <div><strong>🎯 AIM-Mitr</strong><div style="font-size:12px;opacity:.9">Doubt buddy — CBSE help</div></div>
+      <button onclick="document.getElementById('aimPanel').style.display='none'" style="color:#fff">✖</button>
+    </div>
+    <div class="aimmitr-body" id="aimBody">
+      <div class="aimmitr-msg">
+        <div class="aimmitr-bubble bot">
+          Hi! Main <b>AIM-Mitr</b> 🤝<br/>Class & subject choose karo, phir apna doubt type karo.
+          <div style="margin-top:8px">
+            <span class="aimchip" onclick="setQuick('What is valency?')">What is valency?</span>
+            <span class="aimchip" onclick="setQuick('Area of triangle formula with example')">Area of triangle</span>
+            <span class="aimchip" onclick="setQuick('Democracy features for Class 9')">Democracy features</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="aimmitr-foot">
+      <select id="aimClass">
+        <option value="">Class</option><option>5</option><option>6</option><option>7</option><option>8</option>
+        <option>9</option><option>10</option><option>11</option><option>12</option>
+      </select>
+      <select id="aimSubject" style="min-width:90px">
+        <option value="">Subject</option><option>Maths</option><option>Science</option><option>Physics</option>
+        <option>Chemistry</option><option>Biology</option><option>English</option><option>SST</option>
+      </select>
+      <input id="aimInput" placeholder="Type your doubt…" style="flex:1" />
+      <button onclick="aimSend()" style="background:#800020;color:#fff;border:none;border-radius:10px;padding:8px 12px">Send</button>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
   <script>
+    // Mobile nav
+    document.getElementById('mBtn').addEventListener('click', ()=>document.getElementById('mNav').classList.toggle('hidden'));
+    // Year
     document.getElementById('yr').textContent = new Date().getFullYear();
+    // Contact form
+    document.getElementById('contactForm').addEventListener('submit', function(e){
+      e.preventDefault();
+      const name = document.getElementById('name').value.trim();
+      if(!name){ alert('Please fill required fields 🙏'); return; }
+      alert('Thanks! We will ping you soon 😊');
+      this.reset();
+    });
+    // AOS init
+    AOS.init({ duration: 800, easing: 'ease-out-cubic', once: true });
 
-    // register plugin
-    gsap.registerPlugin(ScrollTrigger);
+    // AIM-Mitr logic
+    const aimBtn = document.getElementById('aimBtn');
+    const aimPanel = document.getElementById('aimPanel');
+    const aimBody = document.getElementById('aimBody');
 
-    // simple fade-in reveals for elements with .reveal
-    gsap.utils.toArray('.reveal').forEach((el) => {
-      const delayAttr = parseFloat(el.dataset.gsapDelay) || 0;
-      gsap.fromTo(el,
-        { y: 30, autoAlpha: 0, scale: 0.98 },
-        {
-          y: 0, autoAlpha: 1, scale: 1,
-          duration: 0.75,
-          ease: 'power3.out',
-          delay: delayAttr,
-          scrollTrigger: {
-            trigger: el,
-            start: 'top 85%',
-            toggleActions: 'play none none none'
-          }
+    aimBtn.addEventListener('click', ()=> {
+      aimPanel.style.display = (aimPanel.style.display==='flex') ? 'none' : 'flex';
+      if(aimPanel.style.display==='') aimPanel.style.display='flex';
+    });
+
+    function setQuick(q){ document.getElementById('aimInput').value = q; }
+
+    function pushMsg(text, who='you'){
+      const row = document.createElement('div');
+      row.className = 'aimmitr-msg '+(who==='you'?'you':'');
+      const b = document.createElement('div');
+      b.className = 'aimmitr-bubble '+(who==='you'?'you':'bot');
+      b.innerHTML = text;
+      row.appendChild(b);
+      aimBody.appendChild(row);
+      aimBody.scrollTop = aimBody.scrollHeight;
+    }
+
+    async function aimSend(){
+      const cls = document.getElementById('aimClass').value.trim();
+      const subj = document.getElementById('aimSubject').value.trim();
+      const q = document.getElementById('aimInput').value.trim();
+      if(!q){ return; }
+      pushMsg(q,'you');
+      document.getElementById('aimInput').value = '';
+
+      try{
+        const res = await fetch('/api/aim-mitr', {
+          method:'POST', headers:{'Content-Type':'application/json'},
+          body: JSON.stringify({ question:q, cls, subject:subj })
         });
-    });
-
-    // reveal-x for horizontal reveal (nav headings, section headers)
-    gsap.utils.toArray('.reveal-x').forEach((el, i) => {
-      gsap.fromTo(el, { x: -40, autoAlpha: 0 }, {
-        x: 0, autoAlpha: 1, duration: 0.8, ease: 'power3.out',
-        delay: i * 0.05,
-        scrollTrigger: { trigger: el, start: 'top 90%', toggleActions: 'play none none none' }
-      });
-    });
-
-    // pin the timeline area briefly for a pro effect
-    ScrollTrigger.create({
-      trigger: '#timeline',
-      start: 'top center',
-      end: '+=300',
-      pin: '#timeline',
-      pinSpacing: false
-    });
-
-    // small parallax on hero CTA buttons for extra polish
-    gsap.to('#cta1', {
-      y: -6, ease: 'sine.inOut', duration: 1.6, repeat: -1, yoyo: true, delay: 0.6
-    });
-
-    // responsive tweak: disable ScrollTrigger pin on small screens
-    ScrollTrigger.addEventListener('refreshInit', function() {
-      if(window.innerWidth < 700) {
-        ScrollTrigger.getAll().forEach(st => {
-          if(st.vars && st.vars.pin) st.disable();
-        });
+        const data = await res.json();
+        const answer = (data && data.answer ? data.answer : 'Got it!').replace(/\n/g,'<br>');
+        pushMsg(answer,'bot');
+      }catch(e){
+        pushMsg('Server not connected yet. Try these links: <br>• <a class="aimlink" target="_blank" href="https://ncert.nic.in/textbook.php">NCERT Textbooks</a><br>• <a class="aimlink" target="_blank" href="https://diksha.gov.in/">DIKSHA</a>','bot');
       }
-    });
-
+    }
   </script>
 </body>
 </html>
