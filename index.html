@@ -2,9 +2,10 @@
 <html lang="en">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover" />
   <title>AIMERS — Always Ahead! 🎯</title>
-  <meta name="description" content="AIMERS — Chill + Study + Win. CBSE-ready coaching with daily targets, attendance & assignments." />
+  <meta name="description" content="AIMERS — Chill + Study + Win. Coaching with daily targets, attendance & assignments." />
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
     tailwind.config = {
@@ -22,15 +23,19 @@
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;900&display=swap');
     *{font-family:'Poppins',sans-serif}
+    html,body{-webkit-text-size-adjust:100%;text-size-adjust:100%}
+    input,select,textarea,button{font-size:16px !important} /* prevent mobile auto-zoom */
     .gradient-bg{background:linear-gradient(135deg,#800020 0%,#a0002a 100%)}
     .card-hover{transition:all .25s ease}
     .card-hover:hover{transform:translateY(-6px);box-shadow:0 20px 40px rgba(128,0,32,.18)}
     .float-in{animation:floatIn .6s ease both}
     @keyframes floatIn{0%{opacity:0;transform:translateY(12px) scale(.98)}100%{opacity:1;transform:translateY(0) scale(1)}}
-    /* Chat styles */
     .aim-shadow{box-shadow:0 12px 28px rgba(0,0,0,.16)}
     .typing-dot{width:6px;height:6px;border-radius:9999px;background:#9ca3af;display:inline-block;margin:0 2px;animation:bounce 1s infinite}
     @keyframes bounce{0%,80%,100%{transform:scale(.6)}40%{transform:scale(1)}}
+    #aimWrap{inset:auto 1.5rem 6.5rem auto}
+    #chatBody{overscroll-behavior:contain}
+    @supports(padding:max(0px)){#aimWrap{margin-bottom:max(env(safe-area-inset-bottom),1rem)}}
   </style>
 </head>
 <body class="bg-white">
@@ -126,7 +131,7 @@
   </section>
 
   <!-- FLOATING AIM-MITR BUTTON -->
-  <button id="aimBtn" class="fixed bottom-6 right-6 z-50 w-14 h-14 rounded-full bg-maroon text-white grid place-items-center aim-shadow hover:scale-105 transition">
+  <button id="aimBtn" class="fixed bottom-6 right-6 z-50 w-14 h-14 rounded-full bg-maroon text-white grid place-items-center aim-shadow hover:scale-105 transition" aria-label="Open AIM-Mitr">
     🧞‍♂️
   </button>
 
@@ -140,7 +145,7 @@
           <div class="text-xs text-gray-500">your all-time doubt buddy</div>
         </div>
       </div>
-      <button id="closeChat" class="text-gray-400 hover:text-gray-600 text-xl">×</button>
+      <button id="closeChat" class="text-gray-400 hover:text-gray-600 text-xl" aria-label="Close">×</button>
     </div>
 
     <div id="chatBody" class="h-[56vh] overflow-y-auto p-4 space-y-3 bg-white">
@@ -150,23 +155,35 @@
     </div>
 
     <div class="border-t bg-white p-3 space-y-2">
-      <!-- quick chips -->
-      <div class="flex gap-2 overflow-x-auto pb-1">
-        <button class="chip">What is valency?</button>
-        <button class="chip">Area of triangle</button>
-        <button class="chip">Democracy features</button>
-      </div>
+      <!-- dynamic chips -->
+      <div id="chips" class="flex gap-2 overflow-x-auto pb-1"></div>
+
       <!-- controls -->
-      <div class="flex gap-2">
-        <select id="cls" class="w-24 px-3 py-2 border rounded-lg text-sm">
-          <option value="">Class</option><option>5</option><option>6</option><option>7</option><option>8</option><option>9</option><option>10</option><option>11</option><option>12</option>
+      <div class="flex gap-2 items-stretch">
+        <select id="cls" class="w-24 px-3 py-2 border rounded-lg text-sm" aria-label="Class">
+          <option value="">Class</option>
+          <option>5</option><option>6</option><option>7</option><option>8</option><option>9</option><option>10</option>
+          <option>11</option><option>12</option>
         </select>
-        <select id="subj" class="w-36 px-3 py-2 border rounded-lg text-sm">
+
+        <select id="subj" class="w-40 px-3 py-2 border rounded-lg text-sm" aria-label="Subject" disabled>
           <option value="">Subject</option>
-          <option>Maths</option><option>Physics</option><option>Chemistry</option><option>Biology</option><option>Science</option><option>English</option><option>SST</option>
         </select>
-        <input id="q" class="flex-1 px-3 py-2 border rounded-lg text-sm" placeholder="Apna doubt likho…" />
-        <button id="send" class="px-4 py-2 bg-maroon text-white rounded-lg font-semibold">Send</button>
+
+        <div class="flex-1 flex items-stretch gap-2">
+          <input id="q" class="flex-1 px-3 py-2 border rounded-lg text-sm"
+                 placeholder="Class & subject select karo…" disabled />
+          <!-- Toggle enter behavior -->
+          <button id="enterMode"
+                  class="px-3 py-2 border rounded-lg text-sm text-gray-700"
+                  title="Toggle Enter behavior">↵=Send</button>
+          <!-- Send button -->
+          <button id="send"
+                  class="px-4 py-2 bg-maroon text-white rounded-lg font-semibold opacity-50 cursor-not-allowed"
+                  disabled aria-label="Send">
+            ✈️
+          </button>
+        </div>
       </div>
       <p class="text-[11px] text-gray-500">Tips: concise doubt likho; class/subject set karo for better answer.</p>
     </div>
@@ -175,7 +192,6 @@
   <footer class="py-6 text-center text-sm text-gray-500">© <span id="yr"></span> AIMERS • Chill + Study + Win</footer>
 
   <script>
-    // tiny util
     const $ = s => document.querySelector(s);
     const addMsg = (html, mine=false) => {
       const wrap = document.createElement('div');
@@ -184,59 +200,105 @@
       $('#chatBody').appendChild(wrap);
       $('#chatBody').scrollTop = $('#chatBody').scrollHeight;
     };
-
-    // open/close
     $('#aimBtn').onclick = ()=> $('#aimWrap').classList.toggle('hidden');
     $('#closeChat').onclick = ()=> $('#aimWrap').classList.add('hidden');
+    $('#yr').textContent = new Date().getFullYear();
 
-    // quick chips
-    document.querySelectorAll('.chip').forEach(b=>{
-      b.className='px-3 py-2 bg-gray-100 rounded-full text-sm hover:bg-gray-200';
-      b.onclick=()=>{ $('#q').value=b.textContent; $('#q').focus(); };
+    // ---------- Class/Subject logic + suggestions ----------
+    const SUGGESTIONS = {
+      "5-10": {
+        "Maths": ["What is HCF & LCM?", "Area of triangle", "Linear equations tip"],
+        "Science": ["Define photosynthesis", "States of matter", "Acid vs base"]
+      },
+      "11-12": {
+        "Maths": ["Limit of x→0 (sinx)/x", "Derivative of x^n", "Integration basics"],
+        "Physics": ["Ohm’s law concept", "Scalar vs vector", "Projectile range"],
+        "Chemistry": ["Define valency", "pH concept", "Hybridization (sp, sp2, sp3)"],
+        "Biology": ["Mitosis vs meiosis", "Respiration vs breathing", "Genetics: allele"],
+        "Accounts": ["Journal vs ledger", "Trial balance errors", "Depreciation methods"]
+      }
+    };
+    const clsEl = $('#cls'), subjEl = $('#subj'), qEl = $('#q'),
+          chipsWrap = $('#chips'), sendBtn = $('#send');
+    function setDisabled(state){
+      qEl.disabled = state; sendBtn.disabled = state;
+      sendBtn.classList.toggle('opacity-50', state);
+      sendBtn.classList.toggle('cursor-not-allowed', state);
+    }
+    function getBand(c){ const n = +c||0; return (n>=5&&n<=10) ? "5-10" : (n===11||n===12) ? "11-12" : null; }
+    function populateSubjects(){
+      subjEl.innerHTML = '<option value="">Subject</option>';
+      const band = getBand(clsEl.value);
+      if (!band){ subjEl.disabled=true; setDisabled(true); chipsWrap.innerHTML=''; qEl.placeholder='Class & subject select karo…'; return; }
+      const subjects = Object.keys(SUGGESTIONS[band]);
+      subjects.forEach(s=>{ const o=document.createElement('option'); o.value=s; o.textContent=s; subjEl.appendChild(o); });
+      subjEl.disabled=false; qEl.placeholder='Subject choose karo…'; chipsWrap.innerHTML=''; setDisabled(true);
+    }
+    function populateChips(){
+      const band = getBand(clsEl.value), subj = subjEl.value;
+      chipsWrap.innerHTML=''; if (!band||!subj){ setDisabled(true); return; }
+      (SUGGESTIONS[band][subj]||[]).forEach(txt=>{
+        const b=document.createElement('button');
+        b.className='px-3 py-2 bg-gray-100 rounded-full text-sm hover:bg-gray-200 whitespace-nowrap';
+        b.textContent=txt; b.onclick=()=>{ qEl.value=txt; qEl.focus(); };
+        chipsWrap.appendChild(b);
+      });
+      qEl.placeholder=`Ask ${subj} doubt for Class ${clsEl.value}…`;
+      setDisabled(false);
+    }
+    clsEl.addEventListener('change', populateSubjects);
+    subjEl.addEventListener('change', populateChips);
+
+    // ---------- Send / Enter behavior ----------
+    let sendOnEnter = true;
+    const enterBtn = $('#enterMode');
+    function updateEnterLabel(){ enterBtn.textContent = sendOnEnter ? '↵=Send' : '↵=New line'; }
+    enterBtn.onclick = ()=>{ sendOnEnter = !sendOnEnter; updateEnterLabel(); };
+    updateEnterLabel();
+
+    qEl.addEventListener('keydown', e=>{
+      if (e.key === 'Enter'){
+        if (!clsEl.value || !subjEl.value){ e.preventDefault(); return; }
+        if (sendOnEnter){ e.preventDefault(); sendMsg(); }
+      }
     });
+    sendBtn.onclick = sendMsg;
 
-    // form + send
-    async function sendMsg() {
-      const cls = $('#cls').value.trim();
-      const subject = $('#subj').value.trim();
-      const question = $('#q').value.trim();
-      if (!question) return;
-
+    // ---------- Chat send ----------
+    async function sendMsg(){
+      const cls = clsEl.value.trim(), subject = subjEl.value.trim(), question = qEl.value.trim();
+      if (!cls || !subject || !question) return;
       addMsg(`<span class="font-semibold">👤 You:</span> ${escapeHtml(question)}`, true);
-      $('#q').value = '';
+      qEl.value = '';
 
-      // typing indicator
       const typing = document.createElement('div');
       typing.className = 'bg-gray-50 rounded-2xl px-4 py-3 text-sm';
       typing.innerHTML = `🧞‍♂️ <span class="font-semibold text-maroon">AIM-Mitr:</span> <span class="typing-dot"></span><span class="typing-dot"></span><span class="typing-dot"></span>`;
       $('#chatBody').appendChild(typing);
       $('#chatBody').scrollTop = $('#chatBody').scrollHeight;
 
-      try {
+      try{
         const r = await fetch('/api/aim-mitr', {
           method:'POST',
           headers:{'Content-Type':'application/json'},
           body: JSON.stringify({ cls, subject, question })
         });
         const data = await r.json();
-
         typing.remove();
-        if (data?.debug) console.log('AIM-Mitr debug:', data.debug);
-
-        const answer = data?.answer || "Thoda glitch hua 😅. Dubara try karo.";
+        if (data?.debug) console.log('%cAIM-Mitr debug→','color:#a00', data.debug);
+        const answer = data?.answer || "Thoda glitch hua 😅. Ek line me dubara likh de ya thoda simple karke pooch.";
         addMsg(`🧞‍♂️ <span class="font-semibold text-maroon">AIM-Mitr:</span> ${answer}`);
-      } catch (e) {
+      }catch(e){
         typing.remove();
-        addMsg(`🧞‍♂️ <span class="font-semibold text-maroon">AIM-Mitr:</span> Server side issue aa gaya 😬. Thodi der baad try karo.`);
-        console.log('AIM-Mitr error:', e);
+        console.log('AIM-Mitr network error:', e);
+        addMsg(`🧞‍♂️ <span class="font-semibold text-maroon">AIM-Mitr:</span> Network issue lag raha hai 🔌. Thodi der baad try karo.`);
       }
     }
 
-    $('#send').onclick = sendMsg;
-    $('#q').addEventListener('keydown', e=>{ if(e.key==='Enter'){ e.preventDefault(); sendMsg(); }});
-    $('#yr').textContent = new Date().getFullYear();
-
     function escapeHtml(str){return str.replace(/[&<>"']/g,m=>({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;' }[m]));}
+
+    // init
+    populateSubjects();
   </script>
 </body>
 </html>
