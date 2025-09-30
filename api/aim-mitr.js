@@ -1,5 +1,3 @@
-// api/aim-mitr.js — Gemini (model via GEMINI_MODEL), frank+Hinglish, small-talk, memory, random closers
-
 export default async function handler(req, res) {
   res.setHeader('Access-Control-Allow-Origin','*');
   res.setHeader('Access-Control-Allow-Methods','POST,OPTIONS');
@@ -27,54 +25,52 @@ export default async function handler(req, res) {
 
   const ST = /^(hi+|hello+|hey+|yo+|hola|namaste|namaskar|how\s*are\s*you|sup|kya\s*haal|good\s*(morning|evening|afternoon))\b/i;
   if (ST.test(question)) {
-    const msg = [
-      "Hey! 👋 Mood set hai. Ab kaam ki baat — class & subject set karke apna doubt type kar 😎",
-      closer
-    ].join("<br><br>");
-    return res.status(200).json({ answer: msg });
+    return res.status(200).json({
+      answer: `Hey! 👋 Mood set hai. Ab kaam ki baat — class & subject set karke apna doubt type kar 😎<br><br>${closer}`
+    });
   }
 
   const system = `
 You are "AIM-Mitr": a genie-like senior friend for CBSE students.
 Style: frank, witty, motivating; Hinglish + English; strictly school-safe.
-Never include links, sources, citations, or site names. No "according to..." lines.
-If user is toxic/abusive: classy, savage comeback — no profanity.
+Never include links/sources. If user is toxic: classy, savage comeback (no profanity).
 Answer rules:
 • Concept -> 3–6 crisp lines + tiny example.
 • Problem -> 2–6 bullet steps + final answer.
-• Add 1–2 practice tips when useful.
-• Adapt to Class and Subject.
-• Mobile-friendly, concise, no headings.
-`;
+• 1–2 practice tips when useful.
+• Adapt to Class & Subject. Mobile-friendly, concise.`;
 
-  const contents = [];
-  contents.push({ role:"user", parts:[{ text: system }]});
-  for (const t of history) {
-    contents.push({ role: t.role === 'assistant' ? 'model' : 'user', parts: [{ text: t.content }]});
-  }
+  // convo
+  const contents = [{ role:"user", parts:[{ text: system }]}];
+  for (const t of history) contents.push({ role: t.role === 'assistant' ? 'model' : 'user', parts: [{ text: t.content }]});
   contents.push({ role:"user", parts:[{ text: `Class: ${cls || 'NA'}\nSubject: ${subject || 'NA'}\nDoubt: ${question}` }]});
 
   try {
     const apiKey = process.env.GEMINI_API_KEY;
     if (!apiKey) return res.status(500).json({ error:'Missing GEMINI_API_KEY' });
 
-    const model = process.env.GEMINI_MODEL || 'gemini-1.5-flash'; // 👈 configurable
+    const model = process.env.GEMINI_MODEL || 'gemini-1.5-flash';
     const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/${encodeURIComponent(model)}:generateContent?key=${apiKey}`;
-
     const payload = { contents, generationConfig:{ temperature:0.55 } };
 
-    const r = await fetch(endpoint, {
-      method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify(payload)
-    });
+    const r = await fetch(endpoint, { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify(payload) });
     const j = await r.json();
+
+    // If API returned an error object, show it so we can fix fast
+    if (!r.ok || j.error) {
+      const msg = j?.error?.message || JSON.stringify(j).slice(0,300);
+      return res.status(500).json({
+        answer: `⚠️ API error: ${r.status} – ${msg}<br><br>Tip: Check GEMINI_MODEL & if "Generative Language API" is enabled for your Google Cloud project.`,
+        raw: j
+      });
+    }
 
     let text = extractText(j) || 'Glitch ho gaya. Doubt ek line me dubara bhej 🙂';
     text = stripLinks(text);
     text += `<br><br>${closer}`;
-
     return res.status(200).json({ answer: text.replace(/\n/g,'<br>') });
   } catch (e) {
-    return res.status(500).json({ error:'Gemini error', details:String(e) });
+    return res.status(500).json({ answer:`⚠️ Server error: ${String(e)}` });
   }
 }
 
@@ -85,10 +81,7 @@ function readJson(req){ return new Promise(resolve=>{
   req.on('error',()=>resolve({}));
 });}
 function extractText(j){
-  if (j?.candidates?.[0]?.content?.parts) {
-    return j.candidates[0].content.parts.map(p=>p.text||'').join('\n').trim();
-  }
-  if (j?.candidates?.[0]?.content?.parts?.[0]?.text) return j.candidates[0].content.parts[0].text;
+  if (j?.candidates?.[0]?.content?.parts) return j.candidates[0].content.parts.map(p=>p.text||'').join('\n').trim();
   if (j?.candidates?.[0]?.output) return j.candidates[0].output;
   return '';
 }
