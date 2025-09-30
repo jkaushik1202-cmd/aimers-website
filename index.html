@@ -1,33 +1,36 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8"/>
-  <meta name="viewport" content="width=device-width,initial-scale=1"/>
-  <title>AIMERS – Always Ahead! 🎯</title>
-  <meta name="description" content="AIMERS — Chill + Study + Win. CBSE coaching with attendance, assignments & student portal."/>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>AIMERS — Always Ahead! 🎯</title>
+  <meta name="description" content="AIMERS — Chill + Study + Win. CBSE-ready coaching with daily targets, attendance & assignments." />
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
     tailwind.config = {
       theme: {
         extend: {
-          colors: { maroon:'#800020','maroon-light':'#a0002a','maroon-dark':'#600018' },
-          keyframes:{
-            float:{'0%,100%':{transform:'translateY(0)'},'50%':{transform:'translateY(-6px)'}},
-            pop:{'0%':{transform:'scale(.95)',opacity:0},'100%':{transform:'scale(1)',opacity:1}},
-            fadeUp:{'0%':{opacity:0,transform:'translateY(10px)'},'100%':{opacity:1,transform:'translateY(0)'}}
-          },
-          animation:{ float:'float 3s ease-in-out infinite', pop:'pop .22s ease-out both', fadeUp:'fadeUp .35s ease-out both' }
+          colors: {
+            maroon: '#800020',
+            'maroon-light': '#a0002a',
+            'maroon-dark': '#600018'
+          }
         }
       }
     }
   </script>
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;800&display=swap');
-    body{font-family:'Poppins',sans-serif}
-    .card-hover{transition:.25s ease;transform:translateZ(0)}
-    .card-hover:hover{transform:translateY(-6px);box-shadow:0 16px 40px rgba(128,0,32,.15)}
-    .glass{backdrop-filter: blur(10px); background: rgba(255,255,255,.9)}
-    .scrollbar::-webkit-scrollbar{height:6px;width:6px}.scrollbar::-webkit-scrollbar-thumb{background:#ddd;border-radius:6px}
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;900&display=swap');
+    *{font-family:'Poppins',sans-serif}
+    .gradient-bg{background:linear-gradient(135deg,#800020 0%,#a0002a 100%)}
+    .card-hover{transition:all .25s ease}
+    .card-hover:hover{transform:translateY(-6px);box-shadow:0 20px 40px rgba(128,0,32,.18)}
+    .float-in{animation:floatIn .6s ease both}
+    @keyframes floatIn{0%{opacity:0;transform:translateY(12px) scale(.98)}100%{opacity:1;transform:translateY(0) scale(1)}}
+    /* Chat styles */
+    .aim-shadow{box-shadow:0 12px 28px rgba(0,0,0,.16)}
+    .typing-dot{width:6px;height:6px;border-radius:9999px;background:#9ca3af;display:inline-block;margin:0 2px;animation:bounce 1s infinite}
+    @keyframes bounce{0%,80%,100%{transform:scale(.6)}40%{transform:scale(1)}}
   </style>
 </head>
 <body class="bg-white">
@@ -35,42 +38,29 @@
   <!-- NAV -->
   <nav class="fixed w-full top-0 z-40 bg-white/90 backdrop-blur shadow">
     <div class="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between">
-      <div class="flex items-center gap-2">
+      <div class="flex items-center gap-3">
         <span class="text-2xl font-extrabold text-maroon">🎯 AIMERS</span>
-        <span class="text-xs text-gray-500 hidden sm:inline">Chill • Study • Win</span>
+        <span class="text-xs text-gray-500 hidden sm:inline">Always Ahead — Chill • Study • Win</span>
       </div>
-      <div class="hidden md:flex items-center gap-4">
-        <a href="#home" class="font-semibold text-maroon">Home</a>
-        <a href="#courses" class="hover:text-maroon">Courses</a>
-        <a href="#why" class="hover:text-maroon">Why AIMERS?</a>
-        <a href="#reviews" class="hover:text-maroon">Reviews</a>
-        <a href="#contact" class="hover:text-maroon">Contact</a>
-        <a href="/dashboard" target="_blank" class="bg-maroon text-white px-3 py-2 rounded-full font-semibold">Open Portal 👩‍💻🔥</a>
+      <div class="hidden md:flex items-center gap-5">
+        <a href="#home" class="text-maroon font-semibold">Home</a>
+        <a href="#courses" class="text-gray-700 hover:text-maroon">Courses</a>
+        <a href="#why" class="text-gray-700 hover:text-maroon">Why AIMERS?</a>
+        <a href="#contact" class="text-gray-700 hover:text-maroon">Contact</a>
+        <a href="/dashboard" class="bg-maroon text-white px-4 py-2 rounded-full font-semibold">Open Portal 👩‍💻🔥</a>
       </div>
     </div>
   </nav>
 
   <!-- HERO -->
-  <section id="home" class="min-h-[88vh] pt-24 bg-gradient-to-br from-maroon to-maroon-light text-white flex items-center">
-    <div class="max-w-6xl mx-auto px-4 grid md:grid-cols-2 gap-8 items-center">
-      <div class="animate-fadeUp">
-        <h1 class="text-4xl md:text-6xl font-black leading-tight">
-          AIMERS <span class="block text-2xl md:text-3xl font-semibold mt-2">Always Ahead!</span>
-        </h1>
-        <p class="mt-4 md:text-lg text-white/90">Clear concepts, smart hacks, daily targets — aur tension kam, marks zyada 🔥</p>
-        <div class="mt-6 flex flex-col sm:flex-row gap-3">
-          <a href="#courses" class="bg-white text-maroon px-6 py-3 rounded-full font-bold hover:opacity-90">Start Now 🚀</a>
-          <a href="/dashboard" target="_blank" class="inline-flex items-center justify-center border-2 border-white px-6 py-3 rounded-full font-semibold">Student Portal — Mark Attendance 👇</a>
-        </div>
-      </div>
-      <div class="relative">
-        <div class="w-64 h-64 md:w-80 md:h-80 rounded-full bg-white/10 mx-auto animate-float grid place-items-center">
-          <svg viewBox="0 0 200 200" class="w-40 h-40">
-            <circle cx="100" cy="100" r="90" fill="none" stroke="white" opacity=".2" stroke-width="2"/>
-            <circle cx="100" cy="100" r="60" fill="none" stroke="white" opacity=".35" stroke-width="2"/>
-            <text x="100" y="112" text-anchor="middle" fill="white" font-size="52" font-weight="bold">🎯</text>
-          </svg>
-        </div>
+  <section id="home" class="gradient-bg min-h-[88vh] flex items-center pt-20">
+    <div class="max-w-6xl mx-auto px-4 py-14 text-center">
+      <h1 class="text-4xl md:text-6xl font-black text-white mb-2">🎯 AIMERS</h1>
+      <p class="text-xl md:text-2xl text-white/95 font-semibold mb-4">Always Ahead! — Chill + Study + Win 😎🏆</p>
+      <p class="text-white/90 max-w-2xl mx-auto mb-6">Clear concepts, smart hacks, daily targets — aur tension kam, marks zyada. 🔥</p>
+      <div class="flex flex-col sm:flex-row gap-3 justify-center">
+        <a href="#courses" class="bg-white text-maroon px-6 py-3 rounded-full font-bold hover:opacity-95">Start Now 🚀</a>
+        <a href="/dashboard" class="inline-flex items-center justify-center border-2 border-white text-white px-6 py-3 rounded-full font-semibold">Student Portal — Mark Attendance 👇</a>
       </div>
     </div>
   </section>
@@ -78,12 +68,15 @@
   <!-- COURSES -->
   <section id="courses" class="py-14 bg-gray-50">
     <div class="max-w-6xl mx-auto px-4">
-      <h2 class="text-3xl font-bold text-center text-maroon mb-8">Courses — Chill, Learn, Win</h2>
-      <div class="grid md:grid-cols-4 gap-5">
-        <div class="bg-maroon text-white rounded-2xl p-6 text-center card-hover animate-pop"><div class="text-3xl">📖</div><h3 class="font-bold mt-2">Classes 5–8</h3><p class="opacity-90 text-sm">Basics strong banado 💪</p></div>
-        <div class="bg-maroon-light text-white rounded-2xl p-6 text-center card-hover animate-pop" style="animation-delay:.05s"><div class="text-3xl">🔬</div><h3 class="font-bold mt-2">Classes 9–10</h3><p class="opacity-90 text-sm">Boards? Chill, we got you 😌✍️</p></div>
-        <div class="bg-maroon text-white rounded-2xl p-6 text-center card-hover animate-pop" style="animation-delay:.1s"><div class="text-3xl">🧮</div><h3 class="font-bold mt-2">Class 11</h3><p class="opacity-90 text-sm">Stream-wise specialization</p></div>
-        <div class="bg-maroon-dark text-white rounded-2xl p-6 text-center card-hover animate-pop" style="animation-delay:.15s"><div class="text-3xl">🎓</div><h3 class="font-bold mt-2">Class 12</h3><p class="opacity-90 text-sm">Board exam mastery</p></div>
+      <div class="text-center mb-10">
+        <h2 class="text-3xl font-bold text-maroon">Courses — Chill, Learn, Win</h2>
+        <p class="text-gray-600">From basics to boards — short hacks + daily targets.</p>
+      </div>
+      <div class="grid md:grid-cols-4 gap-4">
+        <div class="bg-maroon text-white rounded-2xl p-5 card-hover text-center float-in"><div class="text-2xl mb-2">📖</div><h3 class="font-bold">Classes 5–8</h3><p class="opacity-90 text-sm">Basics strong banado 💪</p></div>
+        <div class="bg-maroon-light text-white rounded-2xl p-5 card-hover text-center float-in" style="animation-delay:.07s"><div class="text-2xl mb-2">🔬</div><h3 class="font-bold">Classes 9–10</h3><p class="opacity-90 text-sm">Boards? Chill, we got you 😌✍️</p></div>
+        <div class="bg-maroon text-white rounded-2xl p-5 card-hover text-center float-in" style="animation-delay:.14s"><div class="text-2xl mb-2">🧮</div><h3 class="font-bold">Class 11</h3><p class="opacity-90 text-sm">Stream-wise specialization</p></div>
+        <div class="bg-maroon-dark text-white rounded-2xl p-5 card-hover text-center float-in" style="animation-delay:.21s"><div class="text-2xl mb-2">🎓</div><h3 class="font-bold">Class 12</h3><p class="opacity-90 text-sm">Board exam mastery</p></div>
       </div>
     </div>
   </section>
@@ -91,205 +84,159 @@
   <!-- WHY -->
   <section id="why" class="py-14 bg-white">
     <div class="max-w-6xl mx-auto px-4">
-      <h2 class="text-3xl font-bold text-center text-maroon mb-8">Why AIMERS? — Short & Real</h2>
-      <div class="grid md:grid-cols-3 gap-6">
-        <div class="flex items-start gap-3 animate-fadeUp"><div class="bg-maroon rounded-full p-3 text-white">⚡</div><div><h4 class="font-semibold text-maroon">Fast Learning</h4><p class="text-gray-600 text-sm">Concepts jaldi fit baithenge 🧠✨</p></div></div>
-        <div class="flex items-start gap-3 animate-fadeUp" style="animation-delay:.05s"><div class="bg-maroon rounded-full p-3 text-white">🎯</div><div><h4 class="font-semibold text-maroon">Daily Targets</h4><p class="text-gray-600 text-sm">No excuses — doable tasks 💯</p></div></div>
-        <div class="flex items-start gap-3 animate-fadeUp" style="animation-delay:.1s"><div class="bg-maroon rounded-full p-3 text-white">📊</div><div><h4 class="font-semibold text-maroon">Progress Track</h4><p class="text-gray-600 text-sm">Attendance, assignments & CSV exports</p></div></div>
+      <div class="text-center mb-8">
+        <h2 class="text-3xl font-bold text-maroon">Why AIMERS? — Short & Real</h2>
       </div>
-    </div>
-  </section>
-
-  <!-- REVIEWS (hand-picked, short) -->
-  <section id="reviews" class="py-16 bg-gray-50">
-    <div class="max-w-7xl mx-auto px-4">
-      <h2 class="text-3xl font-bold text-maroon text-center mb-10">What Students & Parents Say</h2>
-      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-        <div class="bg-white p-6 rounded-2xl card-hover">
-          <div class="flex items-center gap-3 mb-3">
-            <div class="w-10 h-10 rounded-full bg-maroon text-white grid place-items-center font-bold">K</div>
-            <div><div class="font-bold text-maroon">Kunal Sharma</div><div class="text-xs text-gray-500">⭐⭐⭐⭐⭐</div></div>
-          </div>
-          <p class="text-gray-700 text-sm">Environment so positive ki padhne ka mann hota hai 😄. Tough concepts bhi easy-peasy bana dete. Crisp notes + regular tests = always on track. “Be Ahead With Aimers” 🚀</p>
-        </div>
-        <div class="bg-white p-6 rounded-2xl card-hover">
-          <div class="flex items-center gap-3 mb-3">
-            <div class="w-10 h-10 rounded-full bg-maroon text-white grid place-items-center font-bold">A</div>
-            <div><div class="font-bold text-maroon">Akshat</div><div class="text-xs text-gray-500">⭐⭐⭐⭐⭐</div></div>
-          </div>
-          <p class="text-gray-700 text-sm">AIMERS catalyst jaisa hai 🎯. Bhai-jaisa guidance: explain + motivate + push. Personalized attention ne confidence wapas dila diya — results bolte hain 💎.</p>
-        </div>
-        <div class="bg-white p-6 rounded-2xl card-hover">
-          <div class="flex items-center gap-3 mb-3">
-            <div class="w-10 h-10 rounded-full bg-maroon text-white grid place-items-center font-bold">S</div>
-            <div><div class="font-bold text-maroon">Saba</div><div class="text-xs text-gray-500">⭐⭐⭐⭐</div></div>
-          </div>
-          <p class="text-gray-700 text-sm">“More than tuition, it’s a second home.” Mentors who care, vibe jo yaad reh jaye. Padhai + growth + laughter — sab ek saath 👌✨</p>
-        </div>
-        <div class="bg-white p-6 rounded-2xl card-hover">
-          <div class="flex items-center gap-3 mb-3">
-            <div class="w-10 h-10 rounded-full bg-maroon text-white grid place-items-center font-bold">O</div>
-            <div><div class="font-bold text-maroon">Ojal Singh</div><div class="text-xs text-gray-500">⭐⭐⭐⭐</div></div>
-          </div>
-          <p class="text-gray-700 text-sm">Yeh tuition nahi, emotion hai. Masti + midnight help + siblings jaisi care. Notes, life examples aur memories — all in 🔥. “Let’s aim together” 🎯</p>
-        </div>
-        <div class="bg-white p-6 rounded-2xl card-hover">
-          <div class="flex items-center gap-3 mb-3">
-            <div class="w-10 h-10 rounded-full bg-maroon text-white grid place-items-center font-bold">D</div>
-            <div><div class="font-bold text-maroon">ds Sharma</div><div class="text-xs text-gray-500">⭐⭐⭐⭐</div></div>
-          </div>
-          <p class="text-gray-700 text-sm">D grade in Math se 95.4% tak 🔥. Teacher se pehle dost — sahi support mila, tabhi jump possible hua.</p>
-        </div>
-        <div class="bg-white p-6 rounded-2xl card-hover">
-          <div class="flex items-center gap-3 mb-3">
-            <div class="w-10 h-10 rounded-full bg-maroon text-white grid place-items-center font-bold">D</div>
-            <div><div class="font-bold text-maroon">Divyanshi</div><div class="text-xs text-gray-500">⭐⭐⭐⭐</div></div>
-          </div>
-          <p class="text-gray-700 text-sm">Exam time = extra care + quick doubt solve (even late night). Notes ready, vibe friendly — tension down ✨</p>
-        </div>
+      <div class="grid md:grid-cols-3 gap-4">
+        <div class="flex items-start gap-3"><div class="bg-maroon rounded-full p-3 text-white">⚡</div><div><h4 class="font-semibold text-maroon">Fast Learning</h4><p class="text-gray-600 text-sm">Concepts jaldi fit baithenge 🧠✨</p></div></div>
+        <div class="flex items-start gap-3"><div class="bg-maroon rounded-full p-3 text-white">🎯</div><div><h4 class="font-semibold text-maroon">Daily Targets</h4><p class="text-gray-600 text-sm">No excuses — short doable tasks 💯</p></div></div>
+        <div class="flex items-start gap-3"><div class="bg-maroon rounded-full p-3 text-white">📌</div><div><h4 class="font-semibold text-maroon">Progress Track</h4><p class="text-gray-600 text-sm">Attendance, assignments & CSV exports 📊</p></div></div>
       </div>
-      <p class="text-center text-xs text-gray-500 mt-6">*Real feedback highlights — lightly edited for clarity/UI.</p>
     </div>
   </section>
 
   <!-- CONTACT -->
-  <section id="contact" class="py-14 bg-white">
-    <div class="max-w-5xl mx-auto px-4">
-      <h2 class="text-2xl font-bold text-maroon text-center mb-6">Ping Us — Quick & Simple</h2>
+  <section id="contact" class="py-14 bg-gray-50">
+    <div class="max-w-6xl mx-auto px-4">
+      <div class="text-center mb-8">
+        <h2 class="text-2xl font-bold text-maroon">Ping Us — Quick & Simple</h2>
+        <p class="text-gray-600 text-sm">Apna naam likh de yaar 🙌 — we’ll reply fast.</p>
+      </div>
       <div class="grid md:grid-cols-2 gap-6">
-        <form id="contactForm" class="space-y-3 bg-gray-50 p-5 rounded-2xl shadow-sm">
-          <input id="name" required placeholder="Name" class="w-full px-4 py-3 border rounded-lg focus:border-maroon"/>
-          <input id="email" type="email" required placeholder="Email" class="w-full px-4 py-3 border rounded-lg focus:border-maroon"/>
-          <input id="phone" required placeholder="Phone" class="w-full px-4 py-3 border rounded-lg focus:border-maroon"/>
+        <form id="contactForm" class="space-y-3">
+          <input id="name" required placeholder="Name" class="w-full px-4 py-3 border rounded-lg focus:border-maroon" />
+          <input id="email" type="email" required placeholder="Email" class="w-full px-4 py-3 border rounded-lg focus:border-maroon" />
+          <input id="phone" required placeholder="Phone number" class="w-full px-4 py-3 border rounded-lg focus:border-maroon" />
           <select id="classSel" required class="w-full px-4 py-3 border rounded-lg focus:border-maroon">
             <option value="">Select class</option><option>5</option><option>6</option><option>7</option><option>8</option><option>9</option><option>10</option><option>11</option><option>12</option>
           </select>
-          <textarea id="message" rows="3" placeholder="Bol kya scene hai? 🤔📢" class="w-full px-4 py-3 border rounded-lg focus:border-maroon"></textarea>
-          <button class="w-full bg-maroon text-white py-3 rounded-full font-bold">Ping AIMERS 📩</button>
+          <textarea id="message" rows="3" placeholder="Your message…" class="w-full px-4 py-3 border rounded-lg focus:border-maroon"></textarea>
+          <button type="submit" class="w-full bg-maroon text-white py-3 rounded-full font-bold">Ping AIMERS 📩</button>
         </form>
         <div class="space-y-4">
-          <div class="bg-gray-50 p-5 rounded-2xl shadow-sm"><h4 class="font-semibold text-maroon">Contact</h4><p class="text-sm text-gray-600">+91 98765 43210<br/>info@aimers.edu</p></div>
+          <div class="bg-white p-5 rounded-xl aim-shadow">
+            <h4 class="font-semibold text-maroon">Contact</h4>
+            <p class="text-sm text-gray-600">+91 98765 43210</p>
+            <p class="text-sm text-gray-600">info@aimers.edu</p>
+          </div>
           <a href="https://wa.me/919876543210?text=Hi%20AIMERS%2C%20I%20want%20admission%20info%20%F0%9F%98%8E" target="_blank" class="inline-flex items-center justify-center bg-green-500 text-white px-4 py-3 rounded-full font-semibold">Ping on WhatsApp 📲</a>
-          <p class="text-xs text-gray-500">Fast replies on WhatsApp — jaldi connect ho jayega.</p>
         </div>
       </div>
     </div>
   </section>
 
-  <footer class="py-6 text-center text-sm text-gray-500">© <span id="yr"></span> AIMERS • Chill + Study + Win</footer>
-
-  <!-- FLOATING CHAT WIDGET: AIM-Mitr (Genie Friend) -->
-  <button id="aimBtn" class="fixed z-50 bottom-4 right-4 bg-maroon text-white w-12 h-12 rounded-full shadow-lg grid place-items-center animate-pop" aria-label="Open AIM-Mitr">
-    <!-- Genie-ish icon -->
-    <svg xmlns="http://www.w3.org/2000/svg" class="w-7 h-7" viewBox="0 0 24 24" fill="currentColor">
-      <path d="M6 19c-1.657 0-3-1.343-3-3 0-1.13.626-2.11 1.555-2.624C4.2 9.8 7.26 8 12 8s7.8 1.8 7.445 5.376A2.997 2.997 0 0 1 21 16c0 1.657-1.343 3-3 3h-1c-1.105 0-2 .895-2 2v1h-2v-1c0-1.105-.895-2-2-2H6zm6-11c-2.21 0-4-1.343-4-3h8c0 1.657-1.79 3-4 3z"/>
-    </svg>
+  <!-- FLOATING AIM-MITR BUTTON -->
+  <button id="aimBtn" class="fixed bottom-6 right-6 z-50 w-14 h-14 rounded-full bg-maroon text-white grid place-items-center aim-shadow hover:scale-105 transition">
+    🧞‍♂️
   </button>
 
-  <div id="aimPanel" class="fixed z-50 bottom-20 right-4 w-[92vw] max-w-md glass rounded-2xl shadow-xl border border-white/60 hidden">
-    <div class="px-4 py-3 bg-white/70 rounded-t-2xl flex items-center justify-between">
-      <div class="flex items-center gap-2">
-        <div class="w-8 h-8 rounded-full bg-maroon text-white grid place-items-center">🧞</div>
+  <!-- CHAT WIDGET -->
+  <div id="aimWrap" class="hidden fixed bottom-24 right-6 z-50 w-[92vw] max-w-md bg-white rounded-2xl aim-shadow overflow-hidden">
+    <div class="flex items-center justify-between bg-gray-100 px-4 py-3">
+      <div class="flex items-center gap-3">
+        <div class="w-9 h-9 rounded-full bg-maroon/10 grid place-items-center text-2xl">🧞‍♂️</div>
         <div>
-          <div class="font-semibold text-maroon">AIM-Mitr</div>
-          <div class="text-xs text-gray-500 -mt-1">Doubt buddy — CBSE help</div>
+          <div class="font-bold text-maroon">AIM-Mitr</div>
+          <div class="text-xs text-gray-500">your all-time doubt buddy</div>
         </div>
       </div>
-      <button id="aimClose" class="text-gray-500 hover:text-maroon">✕</button>
+      <button id="closeChat" class="text-gray-400 hover:text-gray-600 text-xl">×</button>
     </div>
 
-    <div class="px-4 pt-3">
-      <div id="aimChat" class="h-64 overflow-y-auto scrollbar text-sm space-y-2"></div>
-
-      <div class="mt-3 grid grid-cols-3 gap-2">
-        <button class="px-2 py-1 rounded-full bg-gray-100 text-xs" onclick="aimAsk('What is valency?','9','Chemistry')">What is valency?</button>
-        <button class="px-2 py-1 rounded-full bg-gray-100 text-xs" onclick="aimAsk('Area of triangle formula','9','Maths')">Area of triangle</button>
-        <button class="px-2 py-1 rounded-full bg-gray-100 text-xs" onclick="aimAsk('Features of democracy','10','SST')">Democracy features</button>
+    <div id="chatBody" class="h-[56vh] overflow-y-auto p-4 space-y-3 bg-white">
+      <div class="bg-gray-50 rounded-xl p-3 text-sm text-gray-700">
+        Hi! Main <span class="font-semibold text-maroon">AIM-Mitr</span> 🧞‍♂️. Class & subject choose karo, phir apna doubt type karo.
       </div>
+    </div>
 
-      <div class="flex items-center gap-2 mt-3">
-        <select id="aimClass" class="px-2 py-2 border rounded-lg text-sm">
+    <div class="border-t bg-white p-3 space-y-2">
+      <!-- quick chips -->
+      <div class="flex gap-2 overflow-x-auto pb-1">
+        <button class="chip">What is valency?</button>
+        <button class="chip">Area of triangle</button>
+        <button class="chip">Democracy features</button>
+      </div>
+      <!-- controls -->
+      <div class="flex gap-2">
+        <select id="cls" class="w-24 px-3 py-2 border rounded-lg text-sm">
           <option value="">Class</option><option>5</option><option>6</option><option>7</option><option>8</option><option>9</option><option>10</option><option>11</option><option>12</option>
         </select>
-        <select id="aimSubject" class="px-2 py-2 border rounded-lg text-sm">
+        <select id="subj" class="w-36 px-3 py-2 border rounded-lg text-sm">
           <option value="">Subject</option>
-          <option>Maths</option><option>Science</option><option>Physics</option><option>Chemistry</option><option>Biology</option><option>English</option><option>SST</option>
+          <option>Maths</option><option>Physics</option><option>Chemistry</option><option>Biology</option><option>Science</option><option>English</option><option>SST</option>
         </select>
-        <input id="aimInput" class="flex-1 px-3 py-2 border rounded-lg text-sm" placeholder="Apna doubt likho…"/>
-        <button id="aimSend" class="bg-maroon text-white px-4 py-2 rounded-lg">Ask 🚀</button>
+        <input id="q" class="flex-1 px-3 py-2 border rounded-lg text-sm" placeholder="Apna doubt likho…" />
+        <button id="send" class="px-4 py-2 bg-maroon text-white rounded-lg font-semibold">Send</button>
       </div>
-      <div class="text-[11px] text-gray-500 mt-2 pb-3">Tips: concise doubt likho; class/subject set karo for better answer.</div>
+      <p class="text-[11px] text-gray-500">Tips: concise doubt likho; class/subject set karo for better answer.</p>
     </div>
   </div>
 
+  <footer class="py-6 text-center text-sm text-gray-500">© <span id="yr"></span> AIMERS • Chill + Study + Win</footer>
+
   <script>
-    // footer year + contact form
-    document.getElementById('yr').textContent = new Date().getFullYear();
-    document.getElementById('contactForm').addEventListener('submit', e=>{
-      e.preventDefault();
-      alert('Thanks! We will ping you soon 😊');
-      e.target.reset();
+    // tiny util
+    const $ = s => document.querySelector(s);
+    const addMsg = (html, mine=false) => {
+      const wrap = document.createElement('div');
+      wrap.className = (mine ? 'bg-maroon text-white' : 'bg-gray-50 text-gray-800') + ' rounded-2xl px-4 py-3 text-sm float-in';
+      wrap.innerHTML = html;
+      $('#chatBody').appendChild(wrap);
+      $('#chatBody').scrollTop = $('#chatBody').scrollHeight;
+    };
+
+    // open/close
+    $('#aimBtn').onclick = ()=> $('#aimWrap').classList.toggle('hidden');
+    $('#closeChat').onclick = ()=> $('#aimWrap').classList.add('hidden');
+
+    // quick chips
+    document.querySelectorAll('.chip').forEach(b=>{
+      b.className='px-3 py-2 bg-gray-100 rounded-full text-sm hover:bg-gray-200';
+      b.onclick=()=>{ $('#q').value=b.textContent; $('#q').focus(); };
     });
 
-    // chat widget toggles
-    const aimBtn = document.getElementById('aimBtn');
-    const aimPanel = document.getElementById('aimPanel');
-    const aimChat = document.getElementById('aimChat');
-    document.getElementById('aimClose').onclick = ()=>aimPanel.classList.add('hidden');
-    aimBtn.onclick = ()=>aimPanel.classList.toggle('hidden');
+    // form + send
+    async function sendMsg() {
+      const cls = $('#cls').value.trim();
+      const subject = $('#subj').value.trim();
+      const question = $('#q').value.trim();
+      if (!question) return;
 
-    // convo memory (last few turns)
-    const convo = []; // [{role:'user'|'assistant', content:'...'}]
+      addMsg(`<span class="font-semibold">👤 You:</span> ${escapeHtml(question)}`, true);
+      $('#q').value = '';
 
-    // bubble helper
-    function bubble(html, side='left'){
-      const row = document.createElement('div');
-      row.className = `max-w-[92%] ${side==='left'?'':'ml-auto'} animate-pop`;
-      row.innerHTML = `<div class="px-3 py-2 rounded-2xl ${side==='left'?'bg-gray-100 text-gray-800':'bg-maroon text-white'}">${html}</div>`;
-      aimChat.appendChild(row);
-      aimChat.scrollTop = aimChat.scrollHeight;
-    }
+      // typing indicator
+      const typing = document.createElement('div');
+      typing.className = 'bg-gray-50 rounded-2xl px-4 py-3 text-sm';
+      typing.innerHTML = `🧞‍♂️ <span class="font-semibold text-maroon">AIM-Mitr:</span> <span class="typing-dot"></span><span class="typing-dot"></span><span class="typing-dot"></span>`;
+      $('#chatBody').appendChild(typing);
+      $('#chatBody').scrollTop = $('#chatBody').scrollHeight;
 
-    // main ask function (multi-turn + random closers handled server-side)
-    async function aimAsk(q, cls='', subject=''){
-      const _cls = cls || document.getElementById('aimClass').value;
-      const _sub = subject || document.getElementById('aimSubject').value;
-      if(!q) return;
-
-      bubble(`👩‍🎓 <b>You:</b> ${q}`,'right');
-      convo.push({ role:'user', content:q });
-
-      try{
-        const res = await fetch('/api/aim-mitr', {
+      try {
+        const r = await fetch('/api/aim-mitr', {
           method:'POST',
-          headers:{ 'Content-Type':'application/json' },
-          body: JSON.stringify({ question:q, cls:_cls, subject:_sub, history:convo })
+          headers:{'Content-Type':'application/json'},
+          body: JSON.stringify({ cls, subject, question })
         });
-        const data = await res.json();
-        const msg = data.answer || 'Sorry, try again 🙂';
-        bubble(`🧞 <b>AIM-Mitr:</b> ${msg}`);
+        const data = await r.json();
 
-        // store assistant reply (strip tags for memory)
-        const plain = msg.replace(/<br\s*\/?>/gi,'\n').replace(/<[^>]*>/g,'');
-        convo.push({ role:'assistant', content: plain });
-      }catch(err){
-        bubble(`⚠️ Error: ${err.message}`);
+        typing.remove();
+        if (data?.debug) console.log('AIM-Mitr debug:', data.debug);
+
+        const answer = data?.answer || "Thoda glitch hua 😅. Dubara try karo.";
+        addMsg(`🧞‍♂️ <span class="font-semibold text-maroon">AIM-Mitr:</span> ${answer}`);
+      } catch (e) {
+        typing.remove();
+        addMsg(`🧞‍♂️ <span class="font-semibold text-maroon">AIM-Mitr:</span> Server side issue aa gaya 😬. Thodi der baad try karo.`);
+        console.log('AIM-Mitr error:', e);
       }
     }
 
-    // send handlers
-    document.getElementById('aimSend').onclick = ()=>{
-      const v = document.getElementById('aimInput').value.trim();
-      if(!v) return;
-      document.getElementById('aimInput').value='';
-      aimAsk(v);
-    };
-    document.getElementById('aimInput').addEventListener('keydown', e=>{
-      if(e.key==='Enter'){ e.preventDefault(); document.getElementById('aimSend').click(); }
-    });
+    $('#send').onclick = sendMsg;
+    $('#q').addEventListener('keydown', e=>{ if(e.key==='Enter'){ e.preventDefault(); sendMsg(); }});
+    $('#yr').textContent = new Date().getFullYear();
 
-    // initial hello
-    bubble("Hi! Main <b>AIM-Mitr</b> 🧞. Class & subject choose karo, phir apna doubt type karo.");
+    function escapeHtml(str){return str.replace(/[&<>"']/g,m=>({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;' }[m]));}
   </script>
 </body>
 </html>
